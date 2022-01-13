@@ -661,7 +661,7 @@ public class Unaware {
         
         int preguntaRandom = picker.nextInt(5); //Genera un número aleatorio entre 5 y 0
         
-        int nivelRandom = (int)(Math.random()*(3-1+1)+1);  //Genera un número aleatorio entre 3 y 1
+        int nivelRandom = (int)(Math.random()*(4-1+1)+1);  //Genera un número aleatorio entre 4 y 1
         
         JLabel pregunta = new JLabel(Preguntas.elementAt(preguntaRandom).pregunta, SwingConstants.CENTER);
         pregunta.setBounds(0,0,800,450);
@@ -693,6 +693,7 @@ public class Unaware {
         Timer contador = new Timer(3000, cambio);
         contador.start();
         contador.setRepeats(false);
+        
         
         
         
@@ -771,8 +772,7 @@ public class Unaware {
         
         //RANDOMIZA LAS RESPUESTAS DE TODOS LOS NIVLES
         
-        
-        System.out.println(idNivel); 
+       
         
         if(idNivel==1){ //Aquí se ejecutará todo lo que pase en el nivel "Mario"
             int detfondo=0;
@@ -1583,13 +1583,141 @@ public class Unaware {
             
         }
         
-        
+        if (idNivel==4){ // Aquí empieza todo lo del nivel DuckHunt
+            
+            Timer pajarovolando = new Timer(5, null); //RECORDAR BORRAR
+            pajarovolando.start();
+            
+            Timer terminarnivel = new Timer(2000, null);
+            terminarnivel.setRepeats(false);
+            
+            JLayeredPane nivelHunt = new JLayeredPane();
+            nivelHunt.setBounds(0, 0, 800, 500);
+            ventana.add(nivelHunt);
+            
+            ActionListener ganaste = new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                   inBetween(ventana, nivelHunt, player, puntaje+1, idNivel, idPregunta, Preguntas, Niveles,false);
+                }
+            };
+            
+            ActionListener perdiste = new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                   inBetween(ventana, nivelHunt, player, puntaje+1, idNivel, idPregunta, Preguntas, Niveles,true);
+                }
+            };
+            
+            JLabel fondo = new JLabel();
+            fondo.setBounds(0, 0, 800, 500);
+            fondo.setIcon(new ImageIcon("src\\Fondos\\1Fondo.png"));
+            nivelHunt.add(fondo, JLayeredPane.DEFAULT_LAYER);
+            
+            JLabel mira = new JLabel();
+            mira.setBounds(0, 0, 800, 500);
+            mira.setIcon(new ImageIcon("src\\Resources\\01Mira.png"));
+            nivelHunt.add(mira, JLayeredPane.DRAG_LAYER);
+            
+            JLabel respuesta = new JLabel(respuestasRandom.elementAt(0));
+            respuesta.setBounds(0, 120, 100, 40);
+            respuesta.setFont(new Font("Courier", Font.BOLD, 24));
+            nivelHunt.add(respuesta, JLayeredPane.POPUP_LAYER);
+            
+            JLabel pajaro = new JLabel();
+            pajaro.setBounds(-50, 100, 175, 225);
+            pajaro.setIcon(new ImageIcon("src\\Resources\\Pajaro_1.gif"));
+            nivelHunt.add(pajaro, JLayeredPane.MODAL_LAYER);
+            
+            JLabel pregunta = new JLabel(Preguntas.elementAt(idPregunta).pregunta, SwingConstants.CENTER);
+            pregunta.setBounds(0,0,800,80);
+            pregunta.setFont(new Font("Courier", Font.BOLD, 28));
+            pregunta.setForeground(Color.WHITE);
+            nivelHunt.add(pregunta, JLayeredPane.POPUP_LAYER);
+            
+            
+            KeyListener disparar = new KeyListener(){
+                @Override
+                public void keyTyped(KeyEvent e) {
+                    //No se usa
+                }
+
+                @Override
+                public void keyPressed(KeyEvent e) {
+                    if (e.getKeyCode()==10||e.getKeyCode()==32){
+                        mira.setIcon(new ImageIcon("src\\Resources\\02Mira.png"));
+                        pajarovolando.stop();
+                        if(pajaro.getX()<=153||pajaro.getX()>=646){
+                            mira.setIcon(new ImageIcon("src\\Resources\\fallaste.png"));
+                            terminarnivel.addActionListener(perdiste);
+                            terminarnivel.start();
+                        }
+                        else{
+                            if(respuesta.getText()==Preguntas.elementAt(idPregunta).respuestacorrecta){
+                                mira.setIcon(new ImageIcon("src\\Resources\\ganaste.png"));
+                                terminarnivel.addActionListener(ganaste);
+                                terminarnivel.start();
+                            }
+                            else{
+                                mira.setIcon(new ImageIcon("src\\Resources\\perdiste.png"));
+                                terminarnivel.addActionListener(perdiste);
+                                terminarnivel.start();
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void keyReleased(KeyEvent e) {
+                    //No se usa
+                }
+                
+            };
+            
+            ventana.addKeyListener(disparar);
+            
+            ActionListener movimiento = new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if(pajaro.getX()<=900){
+                        pajaro.setLocation(pajaro.getX()+10, pajaro.getY());
+                        respuesta.setLocation(respuesta.getX()+10, respuesta.getY());
+                    }
+                    else{ 
+                        pajaro.setLocation(-50, pajaro.getY());
+                        respuesta.setLocation(0, respuesta.getY());
+                        if(respuesta.getText()==respuestasRandom.elementAt(0)){
+                            respuesta.setText(respuestasRandom.elementAt(1));
+                        }
+                        else if(respuesta.getText()==respuestasRandom.elementAt(1)){
+                            respuesta.setText(respuestasRandom.elementAt(2));
+                        }
+                        else if(respuesta.getText()==respuestasRandom.elementAt(2)){
+                            respuesta.setText(respuestasRandom.elementAt(3));
+                        }
+                        else if(respuesta.getText()==respuestasRandom.elementAt(3)){
+                            respuesta.setText(respuestasRandom.elementAt(0));
+                        }
+                        
+                    }
+                    
+
+                }
+                
+            };
+            
+            pajarovolando.addActionListener(movimiento);
+            
+            
+        }
         
         
 
         
 
     }
+    
+    
     
 
 
