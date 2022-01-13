@@ -22,6 +22,7 @@ public class Nivel {
     //ID = 1 le pertenece al nivel "Mario", no usar.
     //ID = 2 le pertenece al nivel "Botones", no usar.
     //ID = 3 le pertenece al nivel "Cartas", no usar.
+    //ID = 4 le pertenece al nivel "DuckHunt", no usar.
     
     
     
