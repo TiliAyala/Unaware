@@ -647,8 +647,17 @@ public class Unaware {
             vidas.setBounds(350, 80, 100, 100);
             vidas.setIcon(new ImageIcon("src\\Resources\\1Vida.png"));
         }
-        else{
-            playMenu(ventana, inbetween);
+        else if(player.vidas==0){
+            JFrame nuevaventana = new JFrame();
+            nuevaventana.setBounds(0, 0, 800, 500);
+            nuevaventana.setLocationRelativeTo(null); //Esto hará que el juego siempre aparezca en el centro de la pantalla
+            nuevaventana.setResizable(false);
+            nuevaventana.setTitle("Unaware");
+            nuevaventana.setDefaultCloseOperation(3);
+            nuevaventana.setEnabled(true);
+            nuevaventana.setVisible(true);
+            ventana.dispose();
+            ejecutarMenu(nuevaventana);
         }
         
         inbetween.add(vidas, JLayeredPane.DRAG_LAYER);
@@ -754,9 +763,36 @@ public class Unaware {
     private static void niveles(JFrame ventana, JLayeredPane contenido, Jugador player, int puntaje, int idNivel, int idPregunta, Vector <Pregunta>Preguntas, Vector <Nivel> Niveles){
         borrarContenido(ventana, contenido);
         
-        JLayeredPane nivel = new JLayeredPane();
-        nivel.setBounds(0,0,800,500);
-        ventana.add(nivel);
+        
+        
+        JLabel tiempo = new JLabel();
+        tiempo.setBounds(710, 400, 50, 50);
+        tiempo.setIcon(new ImageIcon("src\\Resources\\Timer.gif"));
+        
+        Timer contadortiempo = new Timer(10000, null);
+        contadortiempo.setRepeats(false);
+        
+        contadortiempo.start();
+        
+        ActionListener perdistetiempo = new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                   JFrame nuevaventana = new JFrame();
+                nuevaventana.setBounds(0, 0, 800, 500);
+                nuevaventana.setLocationRelativeTo(null); //Esto hará que el juego siempre aparezca en el centro de la pantalla
+                nuevaventana.setResizable(false);
+                nuevaventana.setTitle("Unaware");
+                nuevaventana.setDefaultCloseOperation(3);
+                nuevaventana.setEnabled(true);
+                nuevaventana.setVisible(true);
+                ventana.dispose();
+                ejecutarMenu(nuevaventana);
+                }
+            };
+        
+        contadortiempo.addActionListener(perdistetiempo);
+       
+        
         
         
         Vector <String>respuestasRandom = new Vector<String>();
@@ -775,11 +811,23 @@ public class Unaware {
        
         
         if(idNivel==1){ //Aquí se ejecutará todo lo que pase en el nivel "Mario"
+            
+            
+            
+            
+            
+            
             int detfondo=0;
+            
+            JLayeredPane nivel = new JLayeredPane();
+            nivel.setBounds(0,0,800,500);
+            ventana.add(nivel);
         
         JLabel fondo = new JLabel();
         fondo.setBounds(0,0,800,500);
         int randomBackground = (int)(Math.random()*(5-1+1)+1);
+        
+        nivel.add(tiempo, JLayeredPane.DRAG_LAYER);
         
         JLabel escenario = new JLabel();
         escenario.setBounds(0, 0, 800, 500);
@@ -833,115 +881,8 @@ public class Unaware {
                 @Override
                 public void keyPressed(KeyEvent e) {
                     
-                    Timer moversez = new Timer(1, null);
-                    Timer moversed = new Timer(1, null);
+                    movimientoBloques(ventana, this, borrador, e, player);
                     
-                    moversez.stop();
-                    moversed.stop();
-                    
-                    int xinicial = player.cuerpo.getX();
-                    
-                    if(e.getKeyCode()==39||e.getKeyCode()==37){ //Moverse a la derecha o a la izquierda
-                        
-                        
-                        
-                        if(e.getKeyCode()==39){
-                            
-                            moversez.stop();
-                            moversed.stop();
-                            
-                            
-                            player.gender.setCharAt(1, 'R');
-                            player.cuerpo.setIcon(new ImageIcon("src\\Players\\"+player.gender));
-                            
-                            ActionListener sumarMovimiento = new ActionListener(){
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            
-                           int  newX = player.cuerpo.getX()+4;
-
-                           if (player.cuerpo.getX()<611){
-                               if(player.cuerpo.getX()<xinicial+187){
-                                    player.cuerpo.setLocation(newX, 230);
-                                 }
-                               else{
-                                    moversed.stop();
-                                    player.cuerpo.setLocation(xinicial+187, 230);
-                                    borrador.add(moversed);
-                                    borrador.add(moversez);
-                                }
-                             }
-                           else{
-                               player.cuerpo.setLocation(611, 230);
-                               moversed.stop();
-                               borrador.add(moversed);
-                               borrador.add(moversez);
-                           }
-                           
-                            
-                           
-                        }
-                        
-                        
-                    };
-                           moversed.addActionListener(sumarMovimiento);
-                           moversed.start();
-                           moversez.stop();
-                           borrador.add(moversed);
-                           borrador.add(moversez);
-                          }
-                        
-                        if(e.getKeyCode()==37){
-                            
-                            
-                            moversed.stop();
-                            moversez.stop();
-                            
-                            player.gender.setCharAt(1, 'L');
-                            player.cuerpo.setIcon(new ImageIcon("src\\Players\\"+player.gender));
-                            
-                            ActionListener restarMovimiento = new ActionListener(){
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            
-                           int  newX = player.cuerpo.getX()-4;
-                           
-                           
-                           if (player.cuerpo.getX()>50){
-                               if(player.cuerpo.getX()>=xinicial-187){
-                                    player.cuerpo.setLocation(newX, 230);
-                                 }
-                               else{
-                                   moversez.stop();
-                                   player.cuerpo.setLocation(xinicial-187, 230);
-                                   borrador.add(moversed);
-                                   borrador.add(moversez);
-
-                                    
-                                }
-                             }
-                           else{
-                               player.cuerpo.setLocation(50, 230);
-                               moversez.stop();
-                               borrador.add(moversed);
-                               borrador.add(moversez);
-                           }
-                           
-                            
-                           
-                        }
-                        
-                        
-                    };
-                           moversez.addActionListener(restarMovimiento);
-                           moversez.start();
-                           borrador.add(moversed);
-                           borrador.add(moversez);
-                           
-                          }
-                   
-                    }
-                   
                 }
 
                 @Override
@@ -955,6 +896,8 @@ public class Unaware {
         ActionListener ganaste = new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    contadortiempo.stop();
+                    nivel.remove(tiempo);
                    borrador.removeAllElements();
                    inBetween(ventana, nivel, player, puntaje+1, idNivel, idPregunta, Preguntas, Niveles,false);
                 }
@@ -964,6 +907,8 @@ public class Unaware {
         ActionListener perdiste = new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    contadortiempo.stop();
+                    nivel.remove(tiempo);
                    borrador.removeAllElements();
                    inBetween(ventana, nivel, player, puntaje+1, idNivel, idPregunta, Preguntas, Niveles,true);
                 }
@@ -1186,6 +1131,8 @@ public class Unaware {
             
             int aleatorio=0;
             
+            nivelBotones.add(tiempo, JLayeredPane.DRAG_LAYER);
+            
             Vector <Timer> borrador = new Vector <Timer>();
             
             StringBuilder filebutton = new StringBuilder();
@@ -1222,6 +1169,8 @@ public class Unaware {
             ActionListener ganaste = new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    contadortiempo.stop();
+                    nivelBotones.remove(tiempo);
                    borrador.removeAllElements();
                    inBetween(ventana, nivelBotones, player, puntaje+1, idNivel, idPregunta, Preguntas, Niveles,false);
                 }
@@ -1230,6 +1179,8 @@ public class Unaware {
             ActionListener perdiste = new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    contadortiempo.stop();
+                    nivelBotones.remove(tiempo);
                    borrador.removeAllElements();
                    inBetween(ventana, nivelBotones, player, puntaje+1, idNivel, idPregunta, Preguntas, Niveles,true);
                 }
@@ -1391,6 +1342,8 @@ public class Unaware {
             nivelCartas.setBounds(0,0,800,500);
             ventana.add(nivelCartas);
             
+            nivelCartas.add(tiempo, JLayeredPane.DRAG_LAYER);
+            
             Vector <Timer>borrador = new Vector<Timer>();
             
             JLabel fondo = new JLabel();
@@ -1443,6 +1396,8 @@ public class Unaware {
             ActionListener ganaste = new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    contadortiempo.stop();
+                    nivelCartas.remove(tiempo);
                    borrador.removeAllElements();
                    inBetween(ventana, nivelCartas, player, puntaje+1, idNivel, idPregunta, Preguntas, Niveles,false);
                 }
@@ -1451,6 +1406,8 @@ public class Unaware {
             ActionListener perdiste = new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    contadortiempo.stop();
+                    nivelCartas.remove(tiempo);
                    borrador.removeAllElements();
                    inBetween(ventana, nivelCartas, player, puntaje+1, idNivel, idPregunta, Preguntas, Niveles,true);
                 }
@@ -1595,9 +1552,13 @@ public class Unaware {
             nivelHunt.setBounds(0, 0, 800, 500);
             ventana.add(nivelHunt);
             
+            nivelHunt.add(tiempo, JLayeredPane.DRAG_LAYER);
+            
             ActionListener ganaste = new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    contadortiempo.stop();
+                    nivelHunt.remove(tiempo);
                    inBetween(ventana, nivelHunt, player, puntaje+1, idNivel, idPregunta, Preguntas, Niveles,false);
                 }
             };
@@ -1605,6 +1566,8 @@ public class Unaware {
             ActionListener perdiste = new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    contadortiempo.stop();
+                    nivelHunt.remove(tiempo);
                    inBetween(ventana, nivelHunt, player, puntaje+1, idNivel, idPregunta, Preguntas, Niveles,true);
                 }
             };
@@ -1644,6 +1607,9 @@ public class Unaware {
 
                 @Override
                 public void keyPressed(KeyEvent e) {
+                    
+                    ventana.removeKeyListener(this);
+                    
                     if (e.getKeyCode()==10||e.getKeyCode()==32){
                         mira.setIcon(new ImageIcon("src\\Resources\\02Mira.png"));
                         pajarovolando.stop();
@@ -1716,6 +1682,125 @@ public class Unaware {
         
 
     }
+    
+    private static void movimientoBloques(JFrame ventana, KeyListener teclas, Vector borrador, KeyEvent e, Jugador player){
+        Timer moversez = new Timer(1, null);
+                    Timer moversed = new Timer(1, null);
+                    
+                    moversez.stop();
+                    moversed.stop();
+                    
+                    int xinicial = player.cuerpo.getX();
+                    
+                    if(e.getKeyCode()==39||e.getKeyCode()==37){ //Moverse a la derecha o a la izquierda
+                        
+                        
+                        
+                        if(e.getKeyCode()==39){
+                            
+                            moversez.stop();
+                            moversed.stop();
+                            
+                            
+                            player.gender.setCharAt(1, 'R');
+                            player.cuerpo.setIcon(new ImageIcon("src\\Players\\"+player.gender));
+                            
+                            ActionListener sumarMovimiento = new ActionListener(){
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            
+                           int  newX = player.cuerpo.getX()+4;
+
+                           if (player.cuerpo.getX()<611){
+                               if(player.cuerpo.getX()<xinicial+187){
+                                    player.cuerpo.setLocation(newX, 230);
+                                    ventana.removeKeyListener(teclas);
+                                 }
+                               else{
+                                    moversed.stop();
+                                    player.cuerpo.setLocation(xinicial+187, 230);
+                                    ventana.addKeyListener(teclas);
+                                    borrador.add(moversed);
+                                    borrador.add(moversez);
+                                }
+                             }
+                           else{
+                               player.cuerpo.setLocation(611, 230);
+                               moversed.stop();
+                               ventana.addKeyListener(teclas);
+                               borrador.add(moversed);
+                               borrador.add(moversez);
+                           }
+                           
+                            
+                           
+                        }
+                        
+                        
+                    };
+                           moversed.addActionListener(sumarMovimiento);
+                           moversed.start();
+                           moversez.stop();
+                           borrador.add(moversed);
+                           borrador.add(moversez);
+                          }
+                        
+                        if(e.getKeyCode()==37){
+                            
+                            
+                            moversed.stop();
+                            moversez.stop();
+                            
+                            player.gender.setCharAt(1, 'L');
+                            player.cuerpo.setIcon(new ImageIcon("src\\Players\\"+player.gender));
+                            
+                            ActionListener restarMovimiento = new ActionListener(){
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            
+                           int  newX = player.cuerpo.getX()-4;
+                           
+                           
+                           if (player.cuerpo.getX()>50){
+                               if(player.cuerpo.getX()>=xinicial-187){
+                                    player.cuerpo.setLocation(newX, 230);
+                                    ventana.removeKeyListener(teclas);
+                                 }
+                               else{
+                                   moversez.stop();
+                                   player.cuerpo.setLocation(xinicial-187, 230);
+                                   ventana.addKeyListener(teclas);
+                                   borrador.add(moversed);
+                                   borrador.add(moversez);
+
+                                    
+                                }
+                             }
+                           else{
+                               player.cuerpo.setLocation(50, 230);
+                               moversez.stop();
+                               ventana.addKeyListener(teclas);
+                               borrador.add(moversed);
+                               borrador.add(moversez);
+                           }
+                           
+                            
+                           
+                        }
+                        
+                        
+                    };
+                           moversez.addActionListener(restarMovimiento);
+                           moversez.start();
+                           borrador.add(moversed);
+                           borrador.add(moversez);
+                           
+                          }
+                   
+                    }
+                   
+                }
+    
     
     
     
