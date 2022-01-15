@@ -555,6 +555,7 @@ public class Unaware {
         MouseListener empezarInt = new MouseListener(){
             @Override
             public void mouseClicked(MouseEvent e) {
+                       player.vidas=3; //Hace que cada vez que inicie el jugador tenga tres vidas
                        inBetween(ventana,menuJugar,player, 0, 0, 0, PaquetePreguntas, paqueteNiveles, false);
                        
                 
@@ -591,7 +592,7 @@ public class Unaware {
         play.cuerpo.addMouseListener(empezarInt);
         genero.cuerpo.addMouseListener(cambiarPersonaje);
         
-        player.vidas=3; //Hace que cada vez que inicie el jugador tenga tres vidas
+        
         
         
         
@@ -618,15 +619,13 @@ public class Unaware {
         //Esta función es la más importante del juego. randomiza las preguntas y los niveles. Hay que entrar a esta función después de cada nivel
         
         borrarContenido(ventana, contenido);
-        
-        
         if (gameOver==true){
             player.vidas=player.vidas-1;
         }
+        System.out.println(player.vidas);
         
-        
-        
-        JLayeredPane inbetween = new JLayeredPane();
+        if(player.vidas>0){
+             JLayeredPane inbetween = new JLayeredPane();
         inbetween.setBounds(0, 0, 800, 500);
         ventana.add(inbetween);
         JLabel fondocambio = new JLabel();
@@ -647,18 +646,7 @@ public class Unaware {
             vidas.setBounds(350, 80, 100, 100);
             vidas.setIcon(new ImageIcon("src\\Resources\\1Vida.png"));
         }
-        else if(player.vidas==0){
-            JFrame nuevaventana = new JFrame();
-            nuevaventana.setBounds(0, 0, 800, 500);
-            nuevaventana.setLocationRelativeTo(null); //Esto hará que el juego siempre aparezca en el centro de la pantalla
-            nuevaventana.setResizable(false);
-            nuevaventana.setTitle("Unaware");
-            nuevaventana.setDefaultCloseOperation(3);
-            nuevaventana.setEnabled(true);
-            nuevaventana.setVisible(true);
-            ventana.dispose();
-            ejecutarMenu(nuevaventana);
-        }
+
         
         inbetween.add(vidas, JLayeredPane.DRAG_LAYER);
         
@@ -702,8 +690,10 @@ public class Unaware {
         Timer contador = new Timer(3000, cambio);
         contador.start();
         contador.setRepeats(false);
-        
-        
+        }
+        else{
+            ejecutarMenu(ventana);
+        }
         
         
         
@@ -753,10 +743,7 @@ public class Unaware {
         Timer tiempoMovimiento = new Timer(10, movimiento);
         tiempoMovimiento.start();
         
-        
-        
-        //Nota del programador Tili: LO LOGRÉ CARAJOOOOO LOGRÉ HACER QUE ESE WEON SE MUEVA LET'S GOOOOO
-        
+       
        
     }
     
@@ -777,16 +764,30 @@ public class Unaware {
         ActionListener perdistetiempo = new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                   JFrame nuevaventana = new JFrame();
-                nuevaventana.setBounds(0, 0, 800, 500);
-                nuevaventana.setLocationRelativeTo(null); //Esto hará que el juego siempre aparezca en el centro de la pantalla
-                nuevaventana.setResizable(false);
-                nuevaventana.setTitle("Unaware");
-                nuevaventana.setDefaultCloseOperation(3);
-                nuevaventana.setEnabled(true);
-                nuevaventana.setVisible(true);
-                ventana.dispose();
-                ejecutarMenu(nuevaventana);
+                    tiempo.setIcon(new ImageIcon("src\\Resources\\timeover.png"));
+                    tiempo.setBounds(0,0,800,500);
+                   ActionListener muerte = new ActionListener(){
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            JFrame nuevaventana = new JFrame();
+                    nuevaventana.setBounds(0, 0, 800, 500);
+                    nuevaventana.setLocationRelativeTo(null); //Esto hará que el juego siempre aparezca en el centro de la pantalla
+                    nuevaventana.setResizable(false);
+                    nuevaventana.setTitle("Unaware");
+                    nuevaventana.setDefaultCloseOperation(3);
+                    nuevaventana.setEnabled(true);
+                    nuevaventana.setVisible(true);
+                    ventana.dispose();
+                    ejecutarMenu(nuevaventana);
+                        }
+                       
+                   };
+                   
+                   Timer pantallamuerte = new Timer(3000, muerte);
+                   pantallamuerte.setRepeats(false);
+                   pantallamuerte.start();
+                   
+                   
                 }
             };
         
