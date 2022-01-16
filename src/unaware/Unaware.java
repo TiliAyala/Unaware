@@ -930,6 +930,9 @@ public class Unaware {
                 public void keyPressed(KeyEvent e) {
                     if(e.getKeyCode()==32){
                         
+                        contadortiempo.stop();
+                        nivel.remove(tiempo);
+                        
                         Timer saltox = new Timer(1, null);
                         int inicialy = player.cuerpo.getY();
                         
@@ -1225,6 +1228,8 @@ public class Unaware {
                 @Override
                 public void keyPressed(KeyEvent e) {
                    if(e.getKeyCode()==10||e.getKeyCode()==32){
+                       contadortiempo.stop();
+                    nivelBotones.remove(tiempo);
                        filebutton.setCharAt(1, '2');
                     boton.setIcon(new ImageIcon("src\\NivelBotones\\"+filebutton));
                     respuesta.setBounds(125, 185, 150, 40);
@@ -1267,6 +1272,8 @@ public class Unaware {
             MouseListener presionar1 = new MouseListener(){
                 @Override
                 public void mouseClicked(MouseEvent e) {
+                    contadortiempo.stop();
+                    nivelBotones.remove(tiempo);
                     filebutton.setCharAt(1, '2');
                     boton.setIcon(new ImageIcon("src\\NivelBotones\\"+filebutton));
                     respuesta.setBounds(125, 185, 150, 40);
@@ -1451,6 +1458,8 @@ public class Unaware {
                                 selector.setVisible(false);
                                 iconofinal.setIcon(new ImageIcon("src\\Resources\\Chulito.png"));
                                 iconofinal.setVisible(true);
+                                contadortiempo.stop();
+                    nivelCartas.remove(tiempo);
                                 terminarnivel.addActionListener(ganaste);
                                 terminarnivel.start();
                             }
@@ -1458,6 +1467,8 @@ public class Unaware {
                                 selector.setVisible(false);
                                 iconofinal.setIcon(new ImageIcon("src\\Resources\\X.png"));
                                 iconofinal.setVisible(true);
+                                contadortiempo.stop();
+                    nivelCartas.remove(tiempo);
                                 terminarnivel.addActionListener(perdiste);
                                 terminarnivel.start();
                             }
@@ -1467,6 +1478,8 @@ public class Unaware {
                                 selector.setVisible(false);
                                 iconofinal.setIcon(new ImageIcon("src\\Resources\\Chulito.png"));
                                 iconofinal.setVisible(true);
+                                contadortiempo.stop();
+                    nivelCartas.remove(tiempo);
                                 terminarnivel.addActionListener(ganaste);
                                 terminarnivel.start();
                             }
@@ -1474,6 +1487,8 @@ public class Unaware {
                                 selector.setVisible(false);
                                 iconofinal.setIcon(new ImageIcon("src\\Resources\\X.png"));
                                 iconofinal.setVisible(true);
+                                contadortiempo.stop();
+                    nivelCartas.remove(tiempo);
                                 terminarnivel.addActionListener(perdiste);
                                 terminarnivel.start();
                             }
@@ -1483,6 +1498,8 @@ public class Unaware {
                                 selector.setVisible(false);
                                 iconofinal.setIcon(new ImageIcon("src\\Resources\\Chulito.png"));
                                 iconofinal.setVisible(true);
+                                contadortiempo.stop();
+                    nivelCartas.remove(tiempo);
                                 terminarnivel.addActionListener(ganaste);
                                 terminarnivel.start();
                             }
@@ -1490,6 +1507,8 @@ public class Unaware {
                                 selector.setVisible(false);
                                 iconofinal.setIcon(new ImageIcon("src\\Resources\\X.png"));
                                 iconofinal.setVisible(true);
+                                contadortiempo.stop();
+                    nivelCartas.remove(tiempo);
                                 terminarnivel.addActionListener(perdiste);
                                 terminarnivel.start();
                             }
@@ -1500,6 +1519,8 @@ public class Unaware {
                                 selector.setVisible(false);
                                 iconofinal.setIcon(new ImageIcon("src\\Resources\\Chulito.png"));
                                 iconofinal.setVisible(true);
+                                contadortiempo.stop();
+                    nivelCartas.remove(tiempo);
                                 terminarnivel.addActionListener(ganaste);
                                 terminarnivel.start();
                             }
@@ -1507,6 +1528,8 @@ public class Unaware {
                                 selector.setVisible(false);
                                 iconofinal.setIcon(new ImageIcon("src\\Resources\\X.png"));
                                 iconofinal.setVisible(true);
+                                contadortiempo.stop();
+                    nivelCartas.remove(tiempo);
                                 terminarnivel.addActionListener(perdiste);
                                 terminarnivel.start();
                             }
@@ -1610,6 +1633,9 @@ public class Unaware {
                 public void keyPressed(KeyEvent e) {
                     
                     ventana.removeKeyListener(this);
+                    
+                    contadortiempo.stop();
+                    nivelHunt.remove(tiempo);
                     
                     if (e.getKeyCode()==10||e.getKeyCode()==32){
                         mira.setIcon(new ImageIcon("src\\Resources\\02Mira.png"));
