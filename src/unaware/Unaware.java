@@ -29,7 +29,6 @@ import javax.swing.*;
  */
 public class Unaware {
     
-        
 
     /**
      * @param args the command line arguments
@@ -47,10 +46,14 @@ public class Unaware {
         ventana.setVisible(true);
         
         
+        //ventana.setIconImage(new ImageIcon(Unaware.class.getClassLoader().getResource("\\Resources\\1Vida.png")).getImage());
+        
+        
         ejecutarMenu(ventana); //Esto creará el panel con los elementos del menú
     }
     
-    private static void ejecutarMenu(JFrame ventana){ //El argumento JFrame permite manipular la ventana inicial
+    public static void ejecutarMenu(JFrame ventana){ //El argumento JFrame permite manipular la ventana inicial
+        
         
         
        //INICIALIZACIÓN DEL PANEL
@@ -68,8 +71,9 @@ public class Unaware {
        JLabel fondo3 = new JLabel();
        JLabel fondo4 = new JLabel();
        
-       ImageIcon fondoreal = new ImageIcon("src\\Resources\\Fondo_menu.gif"); //Imagen del fondo
-       ImageIcon fondoreal2 = new ImageIcon("src\\Resources\\Fondo_menu2.png"); //Imagen del fondo 2
+       
+       ImageIcon fondoreal = new ImageIcon(Unaware.class.getResource("/Resources/Fondo_menu.gif"));
+       ImageIcon fondoreal2 = new ImageIcon(Unaware.class.getResource("/Resources/Fondo_menu2.png")); //Imagen del fondo 2
        
        fondo1.setBounds(0, 0, 400, 250); //Cada división del fondo ocupa 1/4 de la pantalla, así que sus dimensiones deben ser
        fondo2.setBounds(400, 0, 400, 250);//ubicadas acorde a su tamaño y localización.
@@ -90,7 +94,7 @@ public class Unaware {
         JLabel title = new JLabel();
         title.setBounds(214, 100, 373,68);
         
-        ImageIcon Im_title = new ImageIcon("src\\Resources\\Titulo.png"); //Imagen del fondo
+        ImageIcon Im_title = new ImageIcon(Unaware.class.getResource("/Resources/Titulo.png")); //Imagen del fondo
         title.setIcon(Im_title);
         
         menu.add(title, JLayeredPane.POPUP_LAYER); //La capa POPUP es la segunda más alta del JLayeredPane
@@ -105,7 +109,7 @@ public class Unaware {
                                                                        //modificado en el programa. Nos servirá para cambiar el nombre del archivo de
                                                                        //la textura del programa, y eso a su vez cambiará la textura dentro del Juego.
                                                                        
-        ImageIcon Im_Jugar = new ImageIcon("src\\Botones\\"+Btn_Jugar.file);
+        ImageIcon Im_Jugar = new ImageIcon(Unaware.class.getResource("/Botones/"+Btn_Jugar.file));
         
         Btn_Jugar.cuerpo.setBounds(200, 240, 80, 80); //Propiedades del cuerpo del Botón
         Btn_Jugar.cuerpo.setIcon(Im_Jugar);
@@ -124,7 +128,7 @@ public class Unaware {
                                                                        //modificado en el programa. Nos servirá para cambiar el nombre del archivo de
                                                                        //la textura del programa, y eso a su vez cambiará la textura dentro del Juego.
                                                                        
-        ImageIcon Im_Info = new ImageIcon("src\\Botones\\"+Btn_Info.file);
+        ImageIcon Im_Info = new ImageIcon(Unaware.class.getResource("/Botones/"+Btn_Info.file));
         
         Btn_Info.cuerpo.setBounds(360, 240, 80, 80); //Propiedades del cuerpo del Botón
         Btn_Info.cuerpo.setIcon(Im_Info);
@@ -143,7 +147,7 @@ public class Unaware {
                                                                        //modificado en el programa. Nos servirá para cambiar el nombre del archivo de
                                                                        //la textura del programa, y eso a su vez cambiará la textura dentro del Juego.
                                                                        
-        ImageIcon Im_Apagar = new ImageIcon("src\\Botones\\"+Btn_Apagar.file);
+        ImageIcon Im_Apagar = new ImageIcon(Unaware.class.getResource("/Botones/"+Btn_Apagar.file));
         
         Btn_Apagar.cuerpo.setBounds(520, 240, 80, 80); //Propiedades del cuerpo del Botón
         Btn_Apagar.cuerpo.setIcon(Im_Apagar);
@@ -192,7 +196,7 @@ public class Unaware {
                    
                    boton.file.setCharAt(1, '2');
                 
-                   ImageIcon nuevo = new ImageIcon ("src\\Botones\\"+boton.file);
+                   ImageIcon nuevo = new ImageIcon(Unaware.class.getResource("/Botones/"+boton.file));
                    boton.cuerpo.setIcon(nuevo); //Cambiar el botón a la imagen de presionado.
                     
                    
@@ -207,7 +211,7 @@ public class Unaware {
                    
                    boton.file.setCharAt(1, '2');
                 
-                   ImageIcon nuevo = new ImageIcon ("src\\Botones\\"+boton.file);
+                   ImageIcon nuevo = new ImageIcon(Unaware.class.getResource("/Botones/"+boton.file));
                    boton.cuerpo.setIcon(nuevo); //Cambiar el botón a la imagen de presionado.
                    
                    JLayeredPane popup = new JLayeredPane();
@@ -257,7 +261,7 @@ public class Unaware {
                 if(oprimido==false){
                     boton.file.setCharAt(1, '1');
                 
-                    ImageIcon nuevo = new ImageIcon ("src\\Botones\\"+boton.file);
+                    ImageIcon nuevo = new ImageIcon(Unaware.class.getResource("/Botones/"+boton.file));
                     boton.cuerpo.setIcon(nuevo);
                 }
                 
@@ -283,7 +287,7 @@ public class Unaware {
                 
                boton.file.setCharAt(1, '0');
                 
-                ImageIcon nuevo = new ImageIcon ("src\\Botones\\"+boton.file);
+                ImageIcon nuevo = new ImageIcon(Unaware.class.getResource("/Botones/"+boton.file));
                 boton.cuerpo.setIcon(nuevo);
                 
                 //EXPLICACIÓN: Los archivos .png de todos los botones empiezan con un código:
@@ -310,7 +314,7 @@ public class Unaware {
         
         JLabel papel = new JLabel (); //Este es el anuncio de la información
         
-        ImageIcon Im_papel = new ImageIcon("src\\Resources\\Fondo_info.png");
+        ImageIcon Im_papel = new ImageIcon(Unaware.class.getResource("/Resources/Fondo_info.png"));
         papel.setIcon(Im_papel);
         
         papel.setBounds(0, 0, 800, 500);
@@ -324,7 +328,7 @@ public class Unaware {
                                                                        //modificado en el programa. Nos servirá para cambiar el nombre del archivo de
                                                                        //la textura del programa, y eso a su vez cambiará la textura dentro del Juego.
                                                                        
-        ImageIcon Im_Regresar = new ImageIcon("src\\Botones\\"+Btn_Regresar.file);
+        ImageIcon Im_Regresar = new ImageIcon(Unaware.class.getResource("/Botones/"+Btn_Regresar.file));
         
         Btn_Regresar.cuerpo.setBounds(600, 330, 80, 80); //Propiedades del cuerpo del Botón
         Btn_Regresar.cuerpo.setIcon(Im_Regresar);
@@ -355,7 +359,7 @@ public class Unaware {
             public void mouseEntered(MouseEvent e) {
                Btn_Regresar.file.setCharAt(1, '1');
                 
-                ImageIcon nuevo = new ImageIcon ("src\\Botones\\"+Btn_Regresar.file);
+                ImageIcon nuevo = new ImageIcon(Unaware.class.getResource("/Botones/"+Btn_Regresar.file));
                 Btn_Regresar.cuerpo.setIcon(nuevo);
             }
 
@@ -363,7 +367,7 @@ public class Unaware {
             public void mouseExited(MouseEvent e) {
                 Btn_Regresar.file.setCharAt(1, '0');
                 
-                ImageIcon nuevo = new ImageIcon ("src\\Botones\\"+Btn_Regresar.file);
+                ImageIcon nuevo = new ImageIcon(Unaware.class.getResource("/Botones/"+Btn_Regresar.file));
                 Btn_Regresar.cuerpo.setIcon(nuevo);
             }
             
@@ -459,7 +463,7 @@ public class Unaware {
         player.gender.append("ML.gif"); //Determina que el jugador es hombre
         
         player.cuerpo.setBounds(600, 270, 150, 150);
-        ImageIcon exhibit = new ImageIcon ("src\\Players\\"+player.gender);
+        ImageIcon exhibit = new ImageIcon(Unaware.class.getResource("/Players/"+player.gender));
         player.cuerpo.setIcon(exhibit);
 
         //INSTANCIA DE LA NUEVA VENTANA
@@ -469,7 +473,7 @@ public class Unaware {
         
         JLabel fondo = new JLabel();
         fondo.setBounds(0,0,800,500);
-        ImageIcon Im_fondo = new ImageIcon("src\\Resources\\Fondo_Jugar.gif");
+        ImageIcon Im_fondo = new ImageIcon(Unaware.class.getResource("/Resources/Fondo_Jugar.gif"));
         fondo.setIcon(Im_fondo);
         
         menuJugar.add(fondo, JLayeredPane.DEFAULT_LAYER);
@@ -482,7 +486,7 @@ public class Unaware {
         Boton play = new Boton();
         play.cuerpo.setBounds(60, 20, 240, 240);
         play.file.append("00_Btn_Empezar.png");
-        ImageIcon Im_play = new ImageIcon("src\\Botones\\"+play.file);
+        ImageIcon Im_play = new ImageIcon(Unaware.class.getResource("/Botones/"+play.file));
         play.cuerpo.setIcon(Im_play);
         
         menuJugar.add(play.cuerpo, JLayeredPane.DRAG_LAYER);
@@ -493,13 +497,13 @@ public class Unaware {
         Boton regresar = new Boton();
         regresar.cuerpo.setBounds(60, 360, 80, 80);
         regresar.file.append("00_Btn_Regresar.png");
-        ImageIcon Im_regresar = new ImageIcon("src\\Botones\\"+regresar.file);
+        ImageIcon Im_regresar = new ImageIcon(Unaware.class.getResource("/Botones/"+regresar.file));
         regresar.cuerpo.setIcon(Im_regresar);
         
         Boton genero = new Boton();
         genero.cuerpo.setBounds(220, 360, 80, 80);
         genero.file.append("00_Btn_M.png");
-        ImageIcon Im_genero = new ImageIcon("src\\Botones\\"+genero.file);
+        ImageIcon Im_genero = new ImageIcon(Unaware.class.getResource("/Botones/"+genero.file));
         genero.cuerpo.setIcon(Im_genero);
         
         menuJugar.add(regresar.cuerpo, JLayeredPane.DRAG_LAYER);
@@ -515,16 +519,16 @@ public class Unaware {
             public void mouseClicked(MouseEvent e) {
                 if(genero.file.charAt(7)=='M'){
                     genero.file.setCharAt(7, 'F');
-                    genero.cuerpo.setIcon(new ImageIcon("src\\Botones\\"+genero.file));
+                    genero.cuerpo.setIcon(new ImageIcon(Unaware.class.getResource("/Botones/"+genero.file)));
                     player.gender.setCharAt(0, 'F');
-                    player.cuerpo.setIcon(new ImageIcon("src\\Players\\"+player.gender));
+                    player.cuerpo.setIcon(new ImageIcon(Unaware.class.getResource("/Players/"+player.gender)));
                     
                 }
                 else{
                     genero.file.setCharAt(7, 'M');
-                    genero.cuerpo.setIcon(new ImageIcon("src\\Botones\\"+genero.file));
+                    genero.cuerpo.setIcon(new ImageIcon(Unaware.class.getResource("/Botones/"+genero.file)));
                     player.gender.setCharAt(0, 'M');
-                    player.cuerpo.setIcon(new ImageIcon("src\\Players\\"+player.gender));
+                    player.cuerpo.setIcon(new ImageIcon(Unaware.class.getResource("/Players/"+player.gender)));
                 }
             }
 
@@ -575,7 +579,7 @@ public class Unaware {
             public void mouseEntered(MouseEvent e) {
                 play.file.setCharAt(1, '1');
                 
-                 ImageIcon nuevo = new ImageIcon ("src\\Botones\\"+play.file);
+                 ImageIcon nuevo = new ImageIcon(Unaware.class.getResource("/Botones/"+play.file));
                  play.cuerpo.setIcon(nuevo);
             }
 
@@ -583,7 +587,7 @@ public class Unaware {
             public void mouseExited(MouseEvent e) {
                 play.file.setCharAt(1, '0');
                 
-                 ImageIcon nuevo = new ImageIcon ("src\\Botones\\"+play.file);
+                 ImageIcon nuevo = new ImageIcon (Unaware.class.getResource("/Botones/"+play.file));
                  play.cuerpo.setIcon(nuevo);
             }
             
@@ -636,22 +640,22 @@ public class Unaware {
         
         if(player.vidas==3){
             vidas.setBounds(250, 80, 300, 100);
-            vidas.setIcon(new ImageIcon("src\\Resources\\3Vidas.png"));
+            vidas.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/3Vidas.png")));
         }
         else if(player.vidas==2){
             vidas.setBounds(300, 80, 200, 100);
-            vidas.setIcon(new ImageIcon("src\\Resources\\2Vidas.png"));
+            vidas.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/2Vidas.png")));
         }
         else if(player.vidas==1){
             vidas.setBounds(350, 80, 100, 100);
-            vidas.setIcon(new ImageIcon("src\\Resources\\1Vida.png"));
+            vidas.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/1Vida.png")));
         }
 
         
         inbetween.add(vidas, JLayeredPane.DRAG_LAYER);
         
         
-        ImageIcon Im_fondocambio = new ImageIcon("src\\Fondos\\Fondo_inbetween.gif");
+        ImageIcon Im_fondocambio = new ImageIcon(Unaware.class.getResource("/Fondos/Fondo_inbetween.gif"));
         fondocambio.setIcon(Im_fondocambio);
         
         Random picker = new Random(); //Nos dará una pregunta aleatoria.
@@ -754,7 +758,7 @@ public class Unaware {
         
         JLabel tiempo = new JLabel();
         tiempo.setBounds(710, 400, 50, 50);
-        tiempo.setIcon(new ImageIcon("src\\Resources\\Timer.gif"));
+        tiempo.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Timer.gif")));
         
         Timer contadortiempo = new Timer(10000, null);
         contadortiempo.setRepeats(false);
@@ -764,7 +768,7 @@ public class Unaware {
         ActionListener perdistetiempo = new ActionListener(){
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    tiempo.setIcon(new ImageIcon("src\\Resources\\timeover.png"));
+                    tiempo.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/timeover.png")));
                     tiempo.setBounds(0,0,800,500);
                    ActionListener muerte = new ActionListener(){
                         @Override
@@ -832,11 +836,11 @@ public class Unaware {
         
         JLabel escenario = new JLabel();
         escenario.setBounds(0, 0, 800, 500);
-        ImageIcon Im_escenario = new ImageIcon("src\\Fondos\\EscenarioNvl1.png");
+        ImageIcon Im_escenario = new ImageIcon(Unaware.class.getResource("/Fondos/EscenarioNvl1.png"));
         escenario.setIcon(Im_escenario);
         nivel.add(escenario, JLayeredPane.PALETTE_LAYER); //La capa PALETTE es la segunda más baja.
         
-        ImageIcon Im_fondo = new ImageIcon("src\\Fondos\\"+randomBackground+"Fondo.png"); //Esto hace que el fondo de este nivel sea también aleatorio.
+        ImageIcon Im_fondo = new ImageIcon(Unaware.class.getResource("/Fondos/"+randomBackground+"Fondo.png")); //Esto hace que el fondo de este nivel sea también aleatorio.
         
         JLabel pregunta = new JLabel(Preguntas.elementAt(idPregunta).pregunta, SwingConstants.CENTER);
         pregunta.setBounds(0,0,800,80);
@@ -868,7 +872,7 @@ public class Unaware {
         
         nivel.add(player.cuerpo, JLayeredPane.DRAG_LAYER);
         player.gender.setCharAt(1, 'R');
-        player.cuerpo.setIcon(new ImageIcon("src\\Players\\"+player.gender));
+        player.cuerpo.setIcon(new ImageIcon(Unaware.class.getResource("/Players/"+player.gender)));
         player.cuerpo.setLocation(50, 230);
         
        Vector <Timer> borrador = new Vector<Timer>();
@@ -962,7 +966,7 @@ public class Unaware {
                             if(player.cuerpo.getX()==50){
                                 primerarespuesta.setText("");
                                 primerarespuesta.setBounds(primerarespuesta.getX(), primerarespuesta.getY()-15,50,50);
-                                primerarespuesta.setIcon(new ImageIcon("src\\Resources\\Chulito.png"));
+                                primerarespuesta.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Chulito.png")));
                                 
                                 Timer ganador = new Timer(3000, ganaste);
                                 
@@ -978,15 +982,15 @@ public class Unaware {
                             if(player.cuerpo.getX()!=50){
                                 primerarespuesta.setText("");
                                 primerarespuesta.setBounds(primerarespuesta.getX(), primerarespuesta.getY()-15,50,50);
-                                primerarespuesta.setIcon(new ImageIcon("src\\Resources\\Chulito.png"));
+                                primerarespuesta.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Chulito.png")));
                                 
                                 
                                 segundarespuesta.setBounds(segundarespuesta.getX(), segundarespuesta.getY()-15,50,50);
                                 tercerarespuesta.setBounds(tercerarespuesta.getX(), tercerarespuesta.getY()-15,50,50);
                                 cuartarespuesta.setBounds(cuartarespuesta.getX(), cuartarespuesta.getY()-15,50,50);
-                                tercerarespuesta.setIcon(new ImageIcon("src\\Resources\\X.png"));
-                                segundarespuesta.setIcon(new ImageIcon("src\\Resources\\X.png"));
-                                cuartarespuesta.setIcon(new ImageIcon("src\\Resources\\X.png"));
+                                tercerarespuesta.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/X.png")));
+                                segundarespuesta.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/X.png")));
+                                cuartarespuesta.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/X.png")));
                                 
                                 Timer perdedor = new Timer(3000, perdiste);
                                 
@@ -1001,7 +1005,7 @@ public class Unaware {
                             if(player.cuerpo.getX()==237){
                                 segundarespuesta.setText("");
                                 segundarespuesta.setBounds(segundarespuesta.getX(), segundarespuesta.getY()-15,50,50);
-                                segundarespuesta.setIcon(new ImageIcon("src\\Resources\\Chulito.png"));
+                                segundarespuesta.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Chulito.png")));
                                 
                                 Timer ganador = new Timer(3000, ganaste);
                                 
@@ -1014,15 +1018,15 @@ public class Unaware {
                             if(player.cuerpo.getX()!=237){
                                 segundarespuesta.setText("");
                                 segundarespuesta.setBounds(segundarespuesta.getX(), segundarespuesta.getY()-15,50,50);
-                                segundarespuesta.setIcon(new ImageIcon("src\\Resources\\Chulito.png"));
+                                segundarespuesta.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Chulito.png")));
                                 
                                 primerarespuesta.setBounds(primerarespuesta.getX(), primerarespuesta.getY()-15,50,50);
                                 tercerarespuesta.setBounds(tercerarespuesta.getX(), tercerarespuesta.getY()-15,50,50);
                                 cuartarespuesta.setBounds(cuartarespuesta.getX(), cuartarespuesta.getY()-15,50,50);
                                 
-                                primerarespuesta.setIcon(new ImageIcon("src\\Resources\\X.png"));
-                                tercerarespuesta.setIcon(new ImageIcon("src\\Resources\\X.png"));
-                                cuartarespuesta.setIcon(new ImageIcon("src\\Resources\\X.png"));
+                                primerarespuesta.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/X.png")));
+                                tercerarespuesta.setIcon(new ImageIcon(Unaware.class.getResource("src/Resources/X.png")));
+                                cuartarespuesta.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/X.png")));
                                 
                                 Timer perdedor = new Timer(3000, perdiste);
                                 
@@ -1037,7 +1041,7 @@ public class Unaware {
                             if(player.cuerpo.getX()==424){
                                 tercerarespuesta.setText("");
                                 tercerarespuesta.setBounds(tercerarespuesta.getX(), tercerarespuesta.getY()-15,50,50);
-                                tercerarespuesta.setIcon(new ImageIcon("src\\Resources\\Chulito.png"));
+                                tercerarespuesta.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Chulito.png")));
                                 
                                 Timer ganador = new Timer(3000, ganaste);
                                 
@@ -1050,7 +1054,7 @@ public class Unaware {
                            if(player.cuerpo.getX()!=424){
                                 tercerarespuesta.setText("");
                                 tercerarespuesta.setBounds(tercerarespuesta.getX(), tercerarespuesta.getY()-15,50,50);
-                                tercerarespuesta.setIcon(new ImageIcon("src\\Resources\\Chulito.png"));
+                                tercerarespuesta.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Chulito.png")));
                                 
                                 primerarespuesta.setBounds(primerarespuesta.getX(), primerarespuesta.getY()-15,50,50);
                                 segundarespuesta.setBounds(segundarespuesta.getX(), segundarespuesta.getY()-15,50,50);
@@ -1058,9 +1062,9 @@ public class Unaware {
                                 
                                 
                                 
-                                primerarespuesta.setIcon(new ImageIcon("src\\Resources\\X.png"));
-                                segundarespuesta.setIcon(new ImageIcon("src\\Resources\\X.png"));
-                                cuartarespuesta.setIcon(new ImageIcon("src\\Resources\\X.png"));
+                                primerarespuesta.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/X.png")));
+                                segundarespuesta.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/X.png")));
+                                cuartarespuesta.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/X.png")));
                                 
                                 Timer perdedor = new Timer(3000, perdiste);
                                 
@@ -1075,7 +1079,7 @@ public class Unaware {
                             if(player.cuerpo.getX()==611){
                                 cuartarespuesta.setText("");
                                 cuartarespuesta.setBounds(cuartarespuesta.getX(), cuartarespuesta.getY()-15,50,50);
-                                cuartarespuesta.setIcon(new ImageIcon("src\\Resources\\Chulito.png"));
+                                cuartarespuesta.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Chulito.png")));
                                 
                                 Timer ganador = new Timer(3000, ganaste);
                                 
@@ -1089,15 +1093,15 @@ public class Unaware {
                             if(player.cuerpo.getX()!=611){
                                 cuartarespuesta.setText("");
                                 cuartarespuesta.setBounds(cuartarespuesta.getX(), cuartarespuesta.getY()-15,50,50);
-                                cuartarespuesta.setIcon(new ImageIcon("src\\Resources\\Chulito.png"));
+                                cuartarespuesta.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Chulito.png")));
                                 
                                 primerarespuesta.setBounds(primerarespuesta.getX(), primerarespuesta.getY()-15,50,50);
                                 segundarespuesta.setBounds(segundarespuesta.getX(), segundarespuesta.getY()-15,50,50);
                                 tercerarespuesta.setBounds(tercerarespuesta.getX(), tercerarespuesta.getY()-15,50,50);
                                 
-                                primerarespuesta.setIcon(new ImageIcon("src\\Resources\\X.png"));
-                                segundarespuesta.setIcon(new ImageIcon("src\\Resources\\X.png"));
-                                tercerarespuesta.setIcon(new ImageIcon("src\\Resources\\X.png"));
+                                primerarespuesta.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/X.png")));
+                                segundarespuesta.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/X.png")));
+                                tercerarespuesta.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/X.png")));
                                 
                                 Timer perdedor = new Timer(3000, perdiste);
                                 
@@ -1144,12 +1148,12 @@ public class Unaware {
             
             JLabel fondo = new JLabel();
             fondo.setBounds(0,0,800,500);
-            fondo.setIcon(new ImageIcon("src\\NivelBotones\\1Fondo.png"));
+            fondo.setIcon(new ImageIcon(Unaware.class.getResource("/NivelBotones/1Fondo.png")));
             nivelBotones.add(fondo, JLayeredPane.DEFAULT_LAYER);
             
             JLabel boton = new JLabel();
             boton.setBounds(50,70,300,300);
-            boton.setIcon(new ImageIcon("src\\NivelBotones\\"+filebutton));
+            boton.setIcon(new ImageIcon(Unaware.class.getResource("/NivelBotones/"+filebutton)));
             nivelBotones.add(boton, JLayeredPane.POPUP_LAYER);
             
             JLabel respuesta = new JLabel(respuestasRandom.elementAt(aleatorio), SwingConstants.CENTER);
@@ -1196,22 +1200,22 @@ public class Unaware {
                     if(respuesta.getText()==respuestasRandom.firstElement()){
                         respuesta.setText(respuestasRandom.elementAt(1));
                         filebutton.setCharAt(0, '1');
-                        boton.setIcon(new ImageIcon("src\\NivelBotones\\"+filebutton));
+                        boton.setIcon(new ImageIcon(Unaware.class.getResource("/NivelBotones/"+filebutton)));
                     }
                     else if(respuesta.getText()==respuestasRandom.elementAt(1)){
                         respuesta.setText(respuestasRandom.elementAt(2));
                         filebutton.setCharAt(0, '2');
-                        boton.setIcon(new ImageIcon("src\\NivelBotones\\"+filebutton));
+                        boton.setIcon(new ImageIcon(Unaware.class.getResource("/NivelBotones/"+filebutton)));
                     }
                     else if(respuesta.getText()==respuestasRandom.elementAt(2)){
                         respuesta.setText(respuestasRandom.elementAt(3));
                         filebutton.setCharAt(0, '3');
-                        boton.setIcon(new ImageIcon("src\\NivelBotones\\"+filebutton));
+                        boton.setIcon(new ImageIcon(Unaware.class.getResource("/NivelBotones/"+filebutton)));
                     }
                     else if(respuesta.getText()==respuestasRandom.elementAt(3)){
                         respuesta.setText(respuestasRandom.elementAt(0));
                         filebutton.setCharAt(0, '0');
-                        boton.setIcon(new ImageIcon("src\\NivelBotones\\"+filebutton));
+                        boton.setIcon(new ImageIcon(Unaware.class.getResource("/NivelBotones/"+filebutton)));
                     }
                     
                    
@@ -1231,7 +1235,7 @@ public class Unaware {
                        contadortiempo.stop();
                     nivelBotones.remove(tiempo);
                        filebutton.setCharAt(1, '2');
-                    boton.setIcon(new ImageIcon("src\\NivelBotones\\"+filebutton));
+                    boton.setIcon(new ImageIcon(Unaware.class.getResource("/NivelBotones/"+filebutton)));
                     respuesta.setBounds(125, 185, 150, 40);
                     
                     cambioBotones.stop();
@@ -1240,7 +1244,7 @@ public class Unaware {
                     terminarnivel.setRepeats(false);
                     
                     if(respuesta.getText()==Preguntas.elementAt(idPregunta).respuestacorrecta){
-                        fondo.setIcon(new ImageIcon("src\\NivelBotones\\2Fondo.png"));
+                        fondo.setIcon(new ImageIcon(Unaware.class.getResource("/NivelBotones/2Fondo.png")));
                         terminarnivel.addActionListener(ganaste);
                         terminarnivel.start();
                         terminarnivel.setRepeats(false);
@@ -1249,7 +1253,7 @@ public class Unaware {
                     else{
                         JLabel explosion = new JLabel();
                         explosion.setBounds(0,0,800,500);
-                        explosion.setIcon(new ImageIcon("src\\NivelBotones\\explosion.gif"));
+                        explosion.setIcon(new ImageIcon(Unaware.class.getResource("/NivelBotones/explosion.gif")));
                         
                         respuesta.setVisible(false);
                         nivelBotones.add(explosion, JLayeredPane.DRAG_LAYER);
@@ -1275,7 +1279,7 @@ public class Unaware {
                     contadortiempo.stop();
                     nivelBotones.remove(tiempo);
                     filebutton.setCharAt(1, '2');
-                    boton.setIcon(new ImageIcon("src\\NivelBotones\\"+filebutton));
+                    boton.setIcon(new ImageIcon(Unaware.class.getResource("/NivelBotones/"+filebutton)));
                     respuesta.setBounds(125, 185, 150, 40);
                     
                     cambioBotones.stop();
@@ -1285,7 +1289,7 @@ public class Unaware {
                     ventana.removeKeyListener(presionar2);
                     
                     if(respuesta.getText()==Preguntas.elementAt(idPregunta).respuestacorrecta){
-                        fondo.setIcon(new ImageIcon("src\\NivelBotones\\2Fondo.png"));
+                        fondo.setIcon(new ImageIcon(Unaware.class.getResource("/NivelBotones/2Fondo.png")));
                         terminarnivel.addActionListener(ganaste);
                         terminarnivel.start();
                         terminarnivel.setRepeats(false);
@@ -1293,7 +1297,7 @@ public class Unaware {
                     else{
                         JLabel explosion = new JLabel();
                         explosion.setBounds(0,0,800,500);
-                        explosion.setIcon(new ImageIcon("src\\NivelBotones\\explosion.gif"));
+                        explosion.setIcon(new ImageIcon(Unaware.class.getResource("/NivelBotones/explosion.gif")));
                         
                         respuesta.setVisible(false);
                         nivelBotones.add(explosion, JLayeredPane.DRAG_LAYER);
@@ -1356,12 +1360,12 @@ public class Unaware {
             
             JLabel fondo = new JLabel();
             fondo.setBounds(0,0,800,500);
-            fondo.setIcon(new ImageIcon("src\\Resources\\00_FondoCartas.png"));
+            fondo.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/00_FondoCartas.png")));
             nivelCartas.add(fondo, JLayeredPane.DEFAULT_LAYER);
             
             JLabel selector = new JLabel();
             selector.setBounds(22,116,183,267);
-            selector.setIcon(new ImageIcon("src\\Resources\\Selector.png"));
+            selector.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Selector.png")));
             nivelCartas.add(selector, JLayeredPane.DRAG_LAYER);
             selector.setVisible(false);
             
@@ -1456,7 +1460,7 @@ public class Unaware {
                         if(selector.getX()==22){
                             if(respuesta1.getText()==Preguntas.elementAt(idPregunta).respuestacorrecta){
                                 selector.setVisible(false);
-                                iconofinal.setIcon(new ImageIcon("src\\Resources\\Chulito.png"));
+                                iconofinal.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Chulito.png")));
                                 iconofinal.setVisible(true);
                                 contadortiempo.stop();
                     nivelCartas.remove(tiempo);
@@ -1465,7 +1469,7 @@ public class Unaware {
                             }
                             else{
                                 selector.setVisible(false);
-                                iconofinal.setIcon(new ImageIcon("src\\Resources\\X.png"));
+                                iconofinal.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/X.png")));
                                 iconofinal.setVisible(true);
                                 contadortiempo.stop();
                     nivelCartas.remove(tiempo);
@@ -1476,7 +1480,7 @@ public class Unaware {
                         else if(selector.getX()==212){
                         if(respuesta2.getText()==Preguntas.elementAt(idPregunta).respuestacorrecta){
                                 selector.setVisible(false);
-                                iconofinal.setIcon(new ImageIcon("src\\Resources\\Chulito.png"));
+                                iconofinal.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Chulito.png")));
                                 iconofinal.setVisible(true);
                                 contadortiempo.stop();
                     nivelCartas.remove(tiempo);
@@ -1485,7 +1489,7 @@ public class Unaware {
                             }
                             else{
                                 selector.setVisible(false);
-                                iconofinal.setIcon(new ImageIcon("src\\Resources\\X.png"));
+                                iconofinal.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/X.png")));
                                 iconofinal.setVisible(true);
                                 contadortiempo.stop();
                     nivelCartas.remove(tiempo);
@@ -1496,7 +1500,7 @@ public class Unaware {
                         else if(selector.getX()==402){
                             if(respuesta3.getText()==Preguntas.elementAt(idPregunta).respuestacorrecta){
                                 selector.setVisible(false);
-                                iconofinal.setIcon(new ImageIcon("src\\Resources\\Chulito.png"));
+                                iconofinal.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Chulito.png")));
                                 iconofinal.setVisible(true);
                                 contadortiempo.stop();
                     nivelCartas.remove(tiempo);
@@ -1505,7 +1509,7 @@ public class Unaware {
                             }
                             else{
                                 selector.setVisible(false);
-                                iconofinal.setIcon(new ImageIcon("src\\Resources\\X.png"));
+                                iconofinal.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/X.png")));
                                 iconofinal.setVisible(true);
                                 contadortiempo.stop();
                     nivelCartas.remove(tiempo);
@@ -1517,7 +1521,7 @@ public class Unaware {
                         else{
                             if(respuesta4.getText()==Preguntas.elementAt(idPregunta).respuestacorrecta){
                                 selector.setVisible(false);
-                                iconofinal.setIcon(new ImageIcon("src\\Resources\\Chulito.png"));
+                                iconofinal.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Chulito.png")));
                                 iconofinal.setVisible(true);
                                 contadortiempo.stop();
                     nivelCartas.remove(tiempo);
@@ -1526,7 +1530,7 @@ public class Unaware {
                             }
                             else{
                                 selector.setVisible(false);
-                                iconofinal.setIcon(new ImageIcon("src\\Resources\\X.png"));
+                                iconofinal.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/X.png")));
                                 iconofinal.setVisible(true);
                                 contadortiempo.stop();
                     nivelCartas.remove(tiempo);
@@ -1553,7 +1557,7 @@ public class Unaware {
                     respuesta3.setVisible(false);
                     respuesta4.setVisible(false);
                     pregunta.setText(Preguntas.elementAt(idPregunta).pregunta);
-                    fondo.setIcon(new ImageIcon("src\\Resources\\01_FondoCartas.png"));
+                    fondo.setIcon(new ImageIcon(Unaware.class.getResource("src/Resources/01_FondoCartas.png")));
                     selector.setVisible(true);
                     ventana.addKeyListener(mover);
                 }
@@ -1598,12 +1602,12 @@ public class Unaware {
             
             JLabel fondo = new JLabel();
             fondo.setBounds(0, 0, 800, 500);
-            fondo.setIcon(new ImageIcon("src\\Fondos\\1Fondo.png"));
+            fondo.setIcon(new ImageIcon(Unaware.class.getResource("/Fondos/1Fondo.png")));
             nivelHunt.add(fondo, JLayeredPane.DEFAULT_LAYER);
             
             JLabel mira = new JLabel();
             mira.setBounds(0, 0, 800, 500);
-            mira.setIcon(new ImageIcon("src\\Resources\\01Mira.png"));
+            mira.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/01Mira.png")));
             nivelHunt.add(mira, JLayeredPane.DRAG_LAYER);
             
             JLabel respuesta = new JLabel(respuestasRandom.elementAt(0));
@@ -1613,7 +1617,7 @@ public class Unaware {
             
             JLabel pajaro = new JLabel();
             pajaro.setBounds(-50, 100, 175, 225);
-            pajaro.setIcon(new ImageIcon("src\\Resources\\Pajaro_1.gif"));
+            pajaro.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Pajaro_1.gif")));
             nivelHunt.add(pajaro, JLayeredPane.MODAL_LAYER);
             
             JLabel pregunta = new JLabel(Preguntas.elementAt(idPregunta).pregunta, SwingConstants.CENTER);
@@ -1638,21 +1642,21 @@ public class Unaware {
                     nivelHunt.remove(tiempo);
                     
                     if (e.getKeyCode()==10||e.getKeyCode()==32){
-                        mira.setIcon(new ImageIcon("src\\Resources\\02Mira.png"));
+                        mira.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/02Mira.png")));
                         pajarovolando.stop();
                         if(pajaro.getX()<=153||pajaro.getX()>=646){
-                            mira.setIcon(new ImageIcon("src\\Resources\\fallaste.png"));
+                            mira.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/fallaste.png")));
                             terminarnivel.addActionListener(perdiste);
                             terminarnivel.start();
                         }
                         else{
                             if(respuesta.getText()==Preguntas.elementAt(idPregunta).respuestacorrecta){
-                                mira.setIcon(new ImageIcon("src\\Resources\\ganaste.png"));
+                                mira.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/ganaste.png")));
                                 terminarnivel.addActionListener(ganaste);
                                 terminarnivel.start();
                             }
                             else{
-                                mira.setIcon(new ImageIcon("src\\Resources\\perdiste.png"));
+                                mira.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/perdiste.png")));
                                 terminarnivel.addActionListener(perdiste);
                                 terminarnivel.start();
                             }
@@ -1730,7 +1734,7 @@ public class Unaware {
                             
                             
                             player.gender.setCharAt(1, 'R');
-                            player.cuerpo.setIcon(new ImageIcon("src\\Players\\"+player.gender));
+                            player.cuerpo.setIcon(new ImageIcon(Unaware.class.getResource("/Players/"+player.gender)));
                             
                             ActionListener sumarMovimiento = new ActionListener(){
                         @Override
@@ -1779,7 +1783,7 @@ public class Unaware {
                             moversez.stop();
                             
                             player.gender.setCharAt(1, 'L');
-                            player.cuerpo.setIcon(new ImageIcon("src\\Players\\"+player.gender));
+                            player.cuerpo.setIcon(new ImageIcon(Unaware.class.getResource("src/Players/"+player.gender)));
                             
                             ActionListener restarMovimiento = new ActionListener(){
                         @Override
