@@ -479,6 +479,20 @@ public class Unaware {
         menuJugar.add(fondo, JLayeredPane.DEFAULT_LAYER);
         menuJugar.add(player.cuerpo, JLayeredPane.DRAG_LAYER);
         
+        //PUNTAJE
+        JLabel cuadro = new JLabel();
+        cuadro.setBounds(360, 20, 360, 240);
+        cuadro.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/scoreboard.png")));
+        menuJugar.add(cuadro, JLayeredPane.POPUP_LAYER);
+        
+        JLabel titulo = new JLabel("HIGH SCORES");
+        titulo.setBounds(470,20,360,50);
+        titulo.setFont(new Font("Futura", Font.BOLD, 20));
+        titulo.setForeground(Color.WHITE);
+        menuJugar.add(titulo, JLayeredPane.DRAG_LAYER);
+        
+        
+        
         //BOTONES DE LA VENTANA
         
         //Botón para empezar a jugar
@@ -1557,7 +1571,7 @@ public class Unaware {
                     respuesta3.setVisible(false);
                     respuesta4.setVisible(false);
                     pregunta.setText(Preguntas.elementAt(idPregunta).pregunta);
-                    fondo.setIcon(new ImageIcon(Unaware.class.getResource("src/Resources/01_FondoCartas.png")));
+                    fondo.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/01_FondoCartas.png")));
                     selector.setVisible(true);
                     ventana.addKeyListener(mover);
                 }
