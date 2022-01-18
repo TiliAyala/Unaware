@@ -13,10 +13,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import static java.util.Collections.shuffle;
 import static java.util.Collections.shuffle;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -34,6 +39,7 @@ public class Unaware {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        
         
         //INICIALIZACIÓN DE LA VENTANA
         JFrame ventana = new JFrame();
@@ -223,10 +229,14 @@ public class Unaware {
                     
                 }
                 
-                if (boton.file.charAt(7)=='J'){ //Si el nombre del archivo tiene una J en el indice 7, es porque el botón es el de Jugar, 
-                                                            //asi que lo que haya en este if solo lo ejecutará el botón Jugar.
-                       
-                       playMenu(ventana, contenido);
+                if (boton.file.charAt(7)=='J'){ try {
+                    //Si el nombre del archivo tiene una J en el indice 7, es porque el botón es el de Jugar,
+                    //asi que lo que haya en este if solo lo ejecutará el botón Jugar.
+
+                    playMenu(ventana, contenido);
+                    } catch (FileNotFoundException ex) {
+                        
+                    }
                        
                 }
                 
@@ -377,7 +387,8 @@ public class Unaware {
         
     }
     
-    private static void playMenu(JFrame ventana, JLayeredPane contenido){ //Esto nos lleva al menú de jugar
+    private static void playMenu(JFrame ventana, JLayeredPane contenido) throws FileNotFoundException{ //Esto nos lleva al menú de jugar
+
         
         //AQUÍ SE GUARDAN LAS PREGUNTAS, PARA QUE SÓLAMENTE SE GENEREN UNA VEZ.
         
@@ -480,6 +491,13 @@ public class Unaware {
         menuJugar.add(player.cuerpo, JLayeredPane.DRAG_LAYER);
         
         //PUNTAJE
+        
+        File puntajes = scores(); //Esto genera las hojas de los puntajes en caso de que no existan
+        
+        Scanner lector = new Scanner(puntajes);
+        
+        
+        
         JLabel cuadro = new JLabel();
         cuadro.setBounds(360, 20, 360, 240);
         cuadro.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/scoreboard.png")));
@@ -490,6 +508,42 @@ public class Unaware {
         titulo.setFont(new Font("Futura", Font.BOLD, 20));
         titulo.setForeground(Color.WHITE);
         menuJugar.add(titulo, JLayeredPane.DRAG_LAYER);
+        
+        
+        JLabel puntaje1 = new JLabel();
+        puntaje1.setText(lector.nextLine()+"    "+lector.nextLine());
+        puntaje1.setBounds(390,70,360,50);
+        puntaje1.setFont(new Font("Futura", Font.BOLD, 20));
+        puntaje1.setForeground(Color.WHITE);
+        menuJugar.add(puntaje1, JLayeredPane.DRAG_LAYER);
+        
+        JLabel puntaje2 = new JLabel();
+        puntaje2.setText(lector.nextLine()+"    "+lector.nextLine());
+        puntaje2.setBounds(390,100,360,50);
+        puntaje2.setFont(new Font("Futura", Font.BOLD, 20));
+        puntaje2.setForeground(Color.WHITE);
+        menuJugar.add(puntaje2, JLayeredPane.DRAG_LAYER);
+        
+        JLabel puntaje3 = new JLabel();
+        puntaje3.setText(lector.nextLine()+"    "+lector.nextLine());
+        puntaje3.setBounds(390,130,360,50);
+        puntaje3.setFont(new Font("Futura", Font.BOLD, 20));
+        puntaje3.setForeground(Color.WHITE);
+        menuJugar.add(puntaje3, JLayeredPane.DRAG_LAYER);
+        
+        JLabel puntaje4 = new JLabel();
+        puntaje4.setText(lector.nextLine()+"    "+lector.nextLine());
+        puntaje4.setBounds(390,160,360,50);
+        puntaje4.setFont(new Font("Futura", Font.BOLD, 20));
+        puntaje4.setForeground(Color.WHITE);
+        menuJugar.add(puntaje4, JLayeredPane.DRAG_LAYER);
+        
+        JLabel puntaje5 = new JLabel();
+        puntaje5.setText(lector.nextLine()+"    "+lector.nextLine());
+        puntaje5.setBounds(390,190,360,50);
+        puntaje5.setFont(new Font("Futura", Font.BOLD, 20));
+        puntaje5.setForeground(Color.WHITE);
+        menuJugar.add(puntaje5, JLayeredPane.DRAG_LAYER);
         
         
         
@@ -640,7 +694,7 @@ public class Unaware {
         if (gameOver==true){
             player.vidas=player.vidas-1;
         }
-        System.out.println(player.vidas);
+
         
         if(player.vidas>0){
              JLayeredPane inbetween = new JLayeredPane();
@@ -710,7 +764,10 @@ public class Unaware {
         contador.setRepeats(false);
         }
         else{
-            ejecutarMenu(ventana);
+            try {
+                actualizarPuntaje(puntaje, ventana);
+            } catch (FileNotFoundException ex) {
+            }
         }
         
         
@@ -1039,7 +1096,7 @@ public class Unaware {
                                 cuartarespuesta.setBounds(cuartarespuesta.getX(), cuartarespuesta.getY()-15,50,50);
                                 
                                 primerarespuesta.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/X.png")));
-                                tercerarespuesta.setIcon(new ImageIcon(Unaware.class.getResource("src/Resources/X.png")));
+                                tercerarespuesta.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/X.png")));
                                 cuartarespuesta.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/X.png")));
                                 
                                 Timer perdedor = new Timer(3000, perdiste);
@@ -1845,6 +1902,118 @@ public class Unaware {
                     }
                    
                 }
+    
+    private static File scores(){
+        File scoreboards = new File(System.getProperty("user.home")+"/AppData/Roaming/unaware.txt");
+        if (scoreboards.exists()!=true){
+            try {
+                //Voy a crear un archivo con 10 lineas. Las lineas impares tendrán el puntaje y las pares tendrán el nombre.
+                //Recordar que si el puntaje es 0 y el nombre es "EMPTY", entonces no se debe mostrar en la tabla.
+                scoreboards.createNewFile();
+                
+                FileWriter escritor = new FileWriter(System.getProperty("user.home")+"/AppData/Roaming/unaware.txt");
+                escritor.write("000"+"\n"+"NONE"+"\n"+"000"+"\n"+"NONE"+"\n"+"000"+"\n"+"NONE"+"\n"+"000"+"\n"+"NONE"+"\n"+"000"+"\n"+"NONE"+"\n"+"000"+"\n"+"EMPTe"+"\n");
+                escritor.close();
+                
+            } catch (IOException ex) {
+               
+            }
+         
+        }
+        else{
+            
+        }
+        
+        return(scoreboards);
+        
+    }
+    
+    private static void actualizarPuntaje(int puntaje, JFrame ventana) throws FileNotFoundException{
+        StringBuilder copiaArchivo = new StringBuilder("");
+        File archivoPuntajes = new File(System.getProperty("user.home")+"/AppData/Roaming/unaware.txt");
+        Scanner lector = new Scanner(archivoPuntajes);
+        
+        while(lector.hasNextLine()){
+            copiaArchivo = copiaArchivo.append(lector.nextLine()+"\n");
+        }
+        
+        
+        String puntaje1S = Character.toString(copiaArchivo.charAt(0))+Character.toString(copiaArchivo.charAt(1))+Character.toString(copiaArchivo.charAt(2));
+        String puntaje2S = Character.toString(copiaArchivo.charAt(9))+Character.toString(copiaArchivo.charAt(10))+Character.toString(copiaArchivo.charAt(11));
+        String puntaje3S = Character.toString(copiaArchivo.charAt(18))+Character.toString(copiaArchivo.charAt(19))+Character.toString(copiaArchivo.charAt(20));
+        String puntaje4S = Character.toString(copiaArchivo.charAt(27))+Character.toString(copiaArchivo.charAt(28))+Character.toString(copiaArchivo.charAt(29));
+        String puntaje5S = Character.toString(copiaArchivo.charAt(36))+Character.toString(copiaArchivo.charAt(37))+Character.toString(copiaArchivo.charAt(38));
+        
+        System.out.println(Character.toString(copiaArchivo.charAt(0))+Character.toString(copiaArchivo.charAt(1))+Character.toString(copiaArchivo.charAt(2)));
+        System.out.println(Character.toString(copiaArchivo.charAt(9))+Character.toString(copiaArchivo.charAt(10))+Character.toString(copiaArchivo.charAt(11)));
+        System.out.println(Character.toString(copiaArchivo.charAt(18))+Character.toString(copiaArchivo.charAt(19))+Character.toString(copiaArchivo.charAt(20)));
+        
+        int puntaje1 = Integer.parseInt(puntaje1S);
+        int puntaje2 = Integer.parseInt(puntaje2S);
+        int puntaje3 = Integer.parseInt(puntaje3S);
+        int puntaje4 = Integer.parseInt(puntaje4S);
+        int puntaje5 = Integer.parseInt(puntaje5S);
+        
+        String nuevopuntaje = "999";
+        if (puntaje<10){
+            nuevopuntaje = "00"+ String.valueOf(puntaje);
+        }
+        else if(puntaje>=10&&puntaje<100){
+            nuevopuntaje = "0"+ String.valueOf(puntaje);
+        }
+        else{
+            nuevopuntaje = String.valueOf(puntaje);
+        }
+        
+        System.out.println(nuevopuntaje);
+        
+        if(puntaje>=puntaje5){
+            if(puntaje>=puntaje1){
+                copiaArchivo.replace(36, 39, puntaje4S);
+                copiaArchivo.replace(27, 30, puntaje3S);
+                copiaArchivo.replace(18, 21, puntaje2S);
+                copiaArchivo.replace(9, 12, puntaje1S);
+                copiaArchivo.replace(0, 3, nuevopuntaje);
+            }
+            else if(puntaje>=puntaje2&&puntaje<=puntaje1){
+                copiaArchivo.replace(36, 39, puntaje4S);
+                copiaArchivo.replace(27, 30, puntaje3S);
+                copiaArchivo.replace(18, 21, puntaje2S);
+                copiaArchivo.replace(9,12, nuevopuntaje);
+            }
+            else if(puntaje>=puntaje3&&puntaje<=puntaje2){
+                copiaArchivo.replace(36, 39, puntaje4S);
+                copiaArchivo.replace(27, 30, puntaje3S);
+                copiaArchivo.replace(18, 21, nuevopuntaje);
+            }
+            else if(puntaje>=puntaje4&&puntaje<=puntaje3){
+                copiaArchivo.replace(36, 39, puntaje4S);
+                copiaArchivo.replace(27, 30, nuevopuntaje);
+            }
+            else if(puntaje>=puntaje5&&puntaje<=puntaje4){
+                copiaArchivo.replace(36,39, nuevopuntaje);
+            }
+
+            
+            archivoPuntajes.delete();
+            
+            try {
+                FileWriter escritor = new FileWriter(archivoPuntajes);
+                escritor.write(copiaArchivo.toString());
+                escritor.close();
+            } catch (IOException ex) {
+                
+            }
+            
+            ejecutarMenu(ventana);
+            
+        }
+        else{
+            ejecutarMenu(ventana);
+        }
+        
+        
+    }
     
     
     
