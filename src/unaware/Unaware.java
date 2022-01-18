@@ -1938,15 +1938,16 @@ public class Unaware {
         }
         
         
+        
         String puntaje1S = Character.toString(copiaArchivo.charAt(0))+Character.toString(copiaArchivo.charAt(1))+Character.toString(copiaArchivo.charAt(2));
         String puntaje2S = Character.toString(copiaArchivo.charAt(9))+Character.toString(copiaArchivo.charAt(10))+Character.toString(copiaArchivo.charAt(11));
         String puntaje3S = Character.toString(copiaArchivo.charAt(18))+Character.toString(copiaArchivo.charAt(19))+Character.toString(copiaArchivo.charAt(20));
         String puntaje4S = Character.toString(copiaArchivo.charAt(27))+Character.toString(copiaArchivo.charAt(28))+Character.toString(copiaArchivo.charAt(29));
         String puntaje5S = Character.toString(copiaArchivo.charAt(36))+Character.toString(copiaArchivo.charAt(37))+Character.toString(copiaArchivo.charAt(38));
         
-        System.out.println(Character.toString(copiaArchivo.charAt(0))+Character.toString(copiaArchivo.charAt(1))+Character.toString(copiaArchivo.charAt(2)));
-        System.out.println(Character.toString(copiaArchivo.charAt(9))+Character.toString(copiaArchivo.charAt(10))+Character.toString(copiaArchivo.charAt(11)));
-        System.out.println(Character.toString(copiaArchivo.charAt(18))+Character.toString(copiaArchivo.charAt(19))+Character.toString(copiaArchivo.charAt(20)));
+        //System.out.println(Character.toString(copiaArchivo.charAt(0))+Character.toString(copiaArchivo.charAt(1))+Character.toString(copiaArchivo.charAt(2)));
+        //System.out.println(Character.toString(copiaArchivo.charAt(9))+Character.toString(copiaArchivo.charAt(10))+Character.toString(copiaArchivo.charAt(11)));
+        //System.out.println(Character.toString(copiaArchivo.charAt(18))+Character.toString(copiaArchivo.charAt(19))+Character.toString(copiaArchivo.charAt(20)));
         
         int puntaje1 = Integer.parseInt(puntaje1S);
         int puntaje2 = Integer.parseInt(puntaje2S);
@@ -1965,9 +1966,99 @@ public class Unaware {
             nuevopuntaje = String.valueOf(puntaje);
         }
         
-        System.out.println(nuevopuntaje);
+        //System.out.println(nuevopuntaje);
+        
+        
         
         if(puntaje>=puntaje5){
+            
+            JLayeredPane ventanarecord = new JLayeredPane();
+            ventanarecord.setBounds(0,0,800,500);
+            ventana.add(ventanarecord);
+            
+            JLabel fondo = new JLabel();
+            fondo.setBounds(0,0,800,500);
+            fondo.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Nuevorecord.png")));
+            ventanarecord.add(fondo, JLayeredPane.DEFAULT_LAYER);
+            
+            Boton retorno = new Boton();
+            retorno.cuerpo.setBounds(360,360,80,80);
+            retorno.file.append("00_Btn_Retorno.png");
+            retorno.cuerpo.setIcon(new ImageIcon(Unaware.class.getResource("/Botones/00_Btn_Retorno.png")));
+            ventanarecord.add(retorno.cuerpo, JLayeredPane.DRAG_LAYER);
+            
+            JTextField nombre = new JTextField("NONE");
+            nombre.setBounds(373,298,100,50);
+            nombre.setFont(new Font("Futura", Font.BOLD, 20));
+            nombre.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+            nombre.setForeground(Color.WHITE);
+            nombre.setBackground(new Color(118, 115, 116));
+            ventanarecord.add(nombre, JLayeredPane.DRAG_LAYER);
+            
+            MouseListener mouse = new MouseListener(){
+            
+            
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                       
+                       ventanarecord.setVisible(false);
+                       borrarContenido(ventana, ventanarecord);
+                try {
+                    actualizarNombres(nombre, puntaje, puntaje1, puntaje2, puntaje3, puntaje4, puntaje5);
+                } catch (FileNotFoundException ex) {
+                    
+                }
+                       ejecutarMenu(ventana);
+                       
+                       
+                   
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+              
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                
+                    retorno.file.setCharAt(1, '1');
+                
+                    ImageIcon nuevo = new ImageIcon(Unaware.class.getResource("/Botones/"+retorno.file));
+                    retorno.cuerpo.setIcon(nuevo);
+                
+                
+            }
+
+            @Override
+            
+            
+            
+            public void mouseExited(MouseEvent e) {
+                
+                
+               retorno.file.setCharAt(1, '0');
+                
+                ImageIcon nuevo = new ImageIcon(Unaware.class.getResource("/Botones/"+retorno.file));
+                retorno.cuerpo.setIcon(nuevo);
+                
+
+            }
+            
+         
+            
+        };
+            
+            
+            
+            
+            
+            
             if(puntaje>=puntaje1){
                 copiaArchivo.replace(36, 39, puntaje4S);
                 copiaArchivo.replace(27, 30, puntaje3S);
@@ -2005,7 +2096,8 @@ public class Unaware {
                 
             }
             
-            ejecutarMenu(ventana);
+            retorno.cuerpo.addMouseListener(mouse);
+            
             
         }
         else{
@@ -2015,7 +2107,89 @@ public class Unaware {
         
     }
     
-    
+    private static void actualizarNombres(JTextField nombre, int puntaje, int puntaje1, int puntaje2, int puntaje3, int puntaje4, int puntaje5) throws FileNotFoundException{
+        StringBuilder copiaArchivo = new StringBuilder("");
+        File archivoPuntajes = new File(System.getProperty("user.home")+"/AppData/Roaming/unaware.txt");
+        Scanner lector = new Scanner(archivoPuntajes);
+        
+        while(lector.hasNextLine()){
+            copiaArchivo = copiaArchivo.append(lector.nextLine()+"\n");
+        }
+        
+        String nombre1S = Character.toString(copiaArchivo.charAt(4))+Character.toString(copiaArchivo.charAt(5))+Character.toString(copiaArchivo.charAt(6))+Character.toString(copiaArchivo.charAt(7));
+        String nombre2S = Character.toString(copiaArchivo.charAt(13))+Character.toString(copiaArchivo.charAt(14))+Character.toString(copiaArchivo.charAt(15))+Character.toString(copiaArchivo.charAt(16));
+        String nombre3S = Character.toString(copiaArchivo.charAt(22))+Character.toString(copiaArchivo.charAt(23))+Character.toString(copiaArchivo.charAt(24))+Character.toString(copiaArchivo.charAt(25));
+        String nombre4S = Character.toString(copiaArchivo.charAt(31))+Character.toString(copiaArchivo.charAt(32))+Character.toString(copiaArchivo.charAt(33))+Character.toString(copiaArchivo.charAt(34));
+        String nombre5S = Character.toString(copiaArchivo.charAt(40))+Character.toString(copiaArchivo.charAt(41))+Character.toString(copiaArchivo.charAt(42))+Character.toString(copiaArchivo.charAt(43));
+        
+        String nombrereal = "";
+        
+        if(nombre.getText().length()>4){
+            nombrereal = Character.toString(nombre.getText().charAt(0))+Character.toString(nombre.getText().charAt(1))+Character.toString(nombre.getText().charAt(2))+Character.toString(nombre.getText().charAt(3));
+            nombrereal = nombrereal.toUpperCase();
+        }
+        else if(nombre.getText().length()==3){
+            nombrereal = nombre.getText()+"-";
+            nombrereal = nombrereal.toUpperCase();
+        }
+        else if(nombre.getText().length()==2){
+            nombrereal = nombre.getText()+"--";
+            nombrereal = nombrereal.toUpperCase();
+        }
+        else if(nombre.getText().length()==1){
+            nombrereal = nombre.getText()+"---";
+            nombrereal = nombrereal.toUpperCase();
+        }
+        else if(nombre.getText().length()==0){
+            nombrereal = "----";
+        }
+        else{
+            nombrereal=nombre.getText();
+            nombrereal = nombrereal.toUpperCase();
+        }
+        
+        if(puntaje>=puntaje1){
+                copiaArchivo.replace(40, 44, nombre4S);
+                copiaArchivo.replace(31, 35, nombre3S);
+                copiaArchivo.replace(22, 26, nombre2S);
+                copiaArchivo.replace(13, 17, nombre1S);
+                copiaArchivo.replace(4, 8, nombrereal);
+            }
+            else if(puntaje>=puntaje2&&puntaje<=puntaje1){
+                copiaArchivo.replace(40, 44, nombre4S);
+                copiaArchivo.replace(31, 35, nombre3S);
+                copiaArchivo.replace(22, 26, nombre2S);
+                copiaArchivo.replace(13, 17, nombrereal);
+            }
+            else if(puntaje>=puntaje3&&puntaje<=puntaje2){
+                copiaArchivo.replace(40, 44, nombre4S);
+                copiaArchivo.replace(31, 35, nombre3S);
+                copiaArchivo.replace(22, 26, nombrereal);
+            }
+            else if(puntaje>=puntaje4&&puntaje<=puntaje3){
+                copiaArchivo.replace(40, 44, nombre4S);
+                copiaArchivo.replace(31, 35, nombrereal);
+            }
+            else if(puntaje>=puntaje5&&puntaje<=puntaje4){
+                copiaArchivo.replace(40, 44, nombrereal);
+            }
+
+            
+            archivoPuntajes.delete();
+            
+            try {
+                FileWriter escritor = new FileWriter(archivoPuntajes);
+                escritor.write(copiaArchivo.toString());
+                escritor.close();
+            } catch (IOException ex) {
+                
+            }
+        
+        
+        
+        
+        
+    }
     
     
 
