@@ -439,6 +439,90 @@ public class Unaware {
         p5.respuestad = "SPRINT";
         PaquetePreguntas.add(p5);
         
+        Pregunta p6 = new Pregunta();
+p6.id = 6;
+p6.pregunta = "Clase para crear espacios de texto pequeños:";
+p6.respuestacorrecta = "JTextField";
+p6.respuestab = "JPanel";
+p6.respuestac = "JButton";
+p6.respuestad = "JFrame";
+PaquetePreguntas.add(p6);
+
+Pregunta p7 = new Pregunta();
+p7.id = 7;
+p7.pregunta = "Método para obtener lo escrito en un área de texto:";
+p7.respuestacorrecta = ".getText";
+p7.respuestab = ".getId";
+p7.respuestac = ".getTxt";
+p7.respuestad = ".add";
+PaquetePreguntas.add(p7);
+
+
+Pregunta p8 = new Pregunta();
+p8.id = 8;
+p8.pregunta = "Librería que sirve para manejar JFrame y JPanel entre otros:";
+p8.respuestacorrecta = "swing";
+p8.respuestab = "awd";
+p8.respuestac = "util";
+p8.respuestad = "Json";
+PaquetePreguntas.add(p8);
+
+
+Pregunta p9 = new Pregunta();
+p9.id = 9;
+p9.pregunta = "Símbolo con el que se cierra cada línea de código:";
+p9.respuestacorrecta = ";";
+p9.respuestab = ":";
+p9.respuestac = "()";
+p9.respuestad = ":)";
+PaquetePreguntas.add(p9);
+
+
+Pregunta p10 = new Pregunta();
+p10.id = 10;
+p10.pregunta = "Método que establece dimensiones";
+p10.respuestacorrecta = ".setBounds()";
+p10.respuestab = ".getText";
+p10.respuestac = ".add";
+p10.respuestad = ".setView()";
+PaquetePreguntas.add(p10);
+
+Pregunta p11 = new Pregunta();
+        p11.id = 11;
+        p11.pregunta = "Método que devuelve el índice:";
+        p11.respuestacorrecta = "indexof";
+        p11.respuestab = "Size";
+        p11.respuestac = "whereis";
+        p11.respuestad = "contains";
+        PaquetePreguntas.add(p11);
+
+Pregunta p12 = new Pregunta();
+        p12.id = 12;
+        p12.pregunta = "Método que crea instancias de una clase:";
+        p12.respuestacorrecta = "Constructor";
+        p12.respuestab = "Modificador";
+        p12.respuestac = "Interfaz";
+        p12.respuestad = "Ninguna";
+        PaquetePreguntas.add(p12);
+
+Pregunta p13 = new Pregunta();
+        p13.id = 13;
+        p13.pregunta = "Resolución con secuencias de instrucciones y subrutinas:";
+        p13.respuestacorrecta = "Estructurada";
+        p13.respuestab = "POO";
+        p13.respuestac = "Avanzada";
+        p13.respuestad = "Alta";
+        PaquetePreguntas.add(p13);
+
+Pregunta p14 = new Pregunta();
+        p14.id = 14;
+        p14.pregunta = "Construcción mediante clases y objetos:";
+        p14.respuestacorrecta = "POO";
+        p14.respuestab = "Estructurada";
+        p14.respuestac = "Avanzada";
+        p14.respuestad = "Alta";
+        PaquetePreguntas.add(p14);
+        
         //AQUÍ, DEL MISMO MODO, SE GUARDARÁN LOS NIVELES
         
         Vector <Nivel> paqueteNiveles = new Vector <Nivel>();
@@ -728,9 +812,9 @@ public class Unaware {
         
         Random picker = new Random(); //Nos dará una pregunta aleatoria.
         
-        int preguntaRandom = picker.nextInt(5); //Genera un número aleatorio entre 5 y 0
+        int preguntaRandom = picker.nextInt(Preguntas.size()); //Genera un número aleatorio entre 5 y 0
         
-        int nivelRandom = (int)(Math.random()*(4-1+1)+1);  //Genera un número aleatorio entre 4 y 1
+        int nivelRandom = (int)(Math.random()*(5-1+1)+1);  //Genera un número aleatorio entre 4 y 1
         
         JLabel pregunta = new JLabel(Preguntas.elementAt(preguntaRandom).pregunta, SwingConstants.CENTER);
         pregunta.setBounds(0,0,800,450);
@@ -844,16 +928,19 @@ public class Unaware {
                    ActionListener muerte = new ActionListener(){
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            JFrame nuevaventana = new JFrame();
-                    nuevaventana.setBounds(0, 0, 800, 500);
-                    nuevaventana.setLocationRelativeTo(null); //Esto hará que el juego siempre aparezca en el centro de la pantalla
-                    nuevaventana.setResizable(false);
-                    nuevaventana.setTitle("Unaware");
-                    nuevaventana.setDefaultCloseOperation(3);
-                    nuevaventana.setEnabled(true);
-                    nuevaventana.setVisible(true);
-                    ventana.dispose();
-                    ejecutarMenu(nuevaventana);
+                            try {
+                                JFrame nuevaventana = new JFrame();
+                                nuevaventana.setBounds(0, 0, 800, 500);
+                                nuevaventana.setLocationRelativeTo(null); //Esto hará que el juego siempre aparezca en el centro de la pantalla
+                                nuevaventana.setResizable(false);
+                                nuevaventana.setTitle("Unaware");
+                                nuevaventana.setDefaultCloseOperation(3);
+                                nuevaventana.setEnabled(true);
+                                nuevaventana.setVisible(true);
+                                ventana.dispose();
+                                actualizarPuntaje(puntaje, nuevaventana);
+                            } catch (FileNotFoundException ex) {
+                            }
                         }
                        
                    };
@@ -1448,23 +1535,23 @@ public class Unaware {
             nivelCartas.add(pregunta, JLayeredPane.POPUP_LAYER);
             
             JLabel respuesta1 = new JLabel(respuestasRandom.elementAt(0), SwingConstants.CENTER);
-            respuesta1.setBounds(65, 200, 100, 40);
-            respuesta1.setFont(new Font("Courier", Font.BOLD, 24));
+            respuesta1.setBounds(55, 200, 120, 40);
+            respuesta1.setFont(new Font("Courier", Font.BOLD, 20));
             nivelCartas.add(respuesta1, JLayeredPane.DRAG_LAYER);
             
             JLabel respuesta2 = new JLabel(respuestasRandom.elementAt(1), SwingConstants.CENTER);
-            respuesta2.setBounds(265, 200, 100, 40);
-            respuesta2.setFont(new Font("Courier", Font.BOLD, 24));
+            respuesta2.setBounds(255, 200, 120, 40);
+            respuesta2.setFont(new Font("Courier", Font.BOLD, 20));
             nivelCartas.add(respuesta2, JLayeredPane.DRAG_LAYER);
             
             JLabel respuesta3 = new JLabel(respuestasRandom.elementAt(2), SwingConstants.CENTER);
-            respuesta3.setBounds(455, 200, 100, 40);
-            respuesta3.setFont(new Font("Courier", Font.BOLD, 24));
+            respuesta3.setBounds(445, 200, 120, 40);
+            respuesta3.setFont(new Font("Courier", Font.BOLD, 20));
             nivelCartas.add(respuesta3, JLayeredPane.DRAG_LAYER);
             
             JLabel respuesta4 = new JLabel(respuestasRandom.elementAt(3), SwingConstants.CENTER);
-            respuesta4.setBounds(645, 200, 100, 40);
-            respuesta4.setFont(new Font("Courier", Font.BOLD, 24));
+            respuesta4.setBounds(635, 200, 120, 40);
+            respuesta4.setFont(new Font("Courier", Font.BOLD, 20));
             nivelCartas.add(respuesta4, JLayeredPane.DRAG_LAYER);
             
             Timer revision = new Timer(2000, null);
@@ -1682,7 +1769,7 @@ public class Unaware {
             nivelHunt.add(mira, JLayeredPane.DRAG_LAYER);
             
             JLabel respuesta = new JLabel(respuestasRandom.elementAt(0));
-            respuesta.setBounds(0, 120, 100, 40);
+            respuesta.setBounds(10, 120, 100, 40);
             respuesta.setFont(new Font("Courier", Font.BOLD, 24));
             nivelHunt.add(respuesta, JLayeredPane.POPUP_LAYER);
             
@@ -1753,7 +1840,7 @@ public class Unaware {
                     }
                     else{ 
                         pajaro.setLocation(-50, pajaro.getY());
-                        respuesta.setLocation(0, respuesta.getY());
+                        respuesta.setLocation(10, respuesta.getY());
                         if(respuesta.getText()==respuestasRandom.elementAt(0)){
                             respuesta.setText(respuestasRandom.elementAt(1));
                         }
@@ -1776,6 +1863,197 @@ public class Unaware {
             
             pajarovolando.addActionListener(movimiento);
             
+            
+        }
+        
+        if(idNivel==5){ //Nivel Cables
+            
+            JLayeredPane nivelCables = new JLayeredPane();
+            nivelCables.setBounds(0, 0, 800, 500);
+            ventana.add(nivelCables);
+            
+            JLabel fondo = new JLabel();
+            fondo.setBounds(0,0,800,500);
+            fondo.setIcon(new ImageIcon(Unaware.class.getResource("/Fondos/FondoCuerdas.png")));
+            nivelCables.add(fondo, JLayeredPane.DEFAULT_LAYER);
+            
+            nivelCables.add(tiempo, JLayeredPane.DRAG_LAYER);
+            
+            JLabel Barril1 = new JLabel();
+            Barril1.setBounds(50,-30,120,450);
+            Barril1.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Barril.png")));
+            nivelCables.add(Barril1, JLayeredPane.POPUP_LAYER);
+            
+            JLabel Barril2 = new JLabel();
+            Barril2.setBounds(220,-30,120,450);
+            Barril2.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Barril.png")));
+            nivelCables.add(Barril2, JLayeredPane.POPUP_LAYER);
+            
+            JLabel Barril3 = new JLabel();
+            Barril3.setBounds(390,-30,120,450);
+            Barril3.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Barril.png")));
+            nivelCables.add(Barril3, JLayeredPane.POPUP_LAYER);
+            
+            JLabel Barril4 = new JLabel();
+            Barril4.setBounds(560,-30,120,450);
+            Barril4.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Barril.png")));
+            nivelCables.add(Barril4, JLayeredPane.POPUP_LAYER);
+            
+            JLabel pregunta = new JLabel(Preguntas.elementAt(idPregunta).pregunta, SwingConstants.CENTER);
+            pregunta.setBounds(0,0,800,80);
+            pregunta.setFont(new Font("Courier", Font.BOLD, 28));
+            pregunta.setForeground(Color.WHITE);
+            nivelCables.add(pregunta, JLayeredPane.DRAG_LAYER);
+            
+            JLabel respuesta1 = new JLabel(respuestasRandom.elementAt(0), SwingConstants.CENTER);
+            respuesta1.setBounds(55, 320, 100, 40);
+            respuesta1.setFont(new Font("Courier", Font.BOLD, 24));
+            respuesta1.setForeground(Color.YELLOW);
+            nivelCables.add(respuesta1, JLayeredPane.DRAG_LAYER);
+            
+            JLabel respuesta2 = new JLabel(respuestasRandom.elementAt(1), SwingConstants.CENTER);
+            respuesta2.setBounds(225, 320, 100, 40);
+            respuesta2.setForeground(Color.YELLOW);
+            respuesta2.setFont(new Font("Courier", Font.BOLD, 24));
+            nivelCables.add(respuesta2, JLayeredPane.DRAG_LAYER);
+            
+            JLabel respuesta3 = new JLabel(respuestasRandom.elementAt(2), SwingConstants.CENTER);
+            respuesta3.setBounds(400, 320, 100, 40);
+            respuesta3.setForeground(Color.YELLOW);
+            respuesta3.setFont(new Font("Courier", Font.BOLD, 24));
+            nivelCables.add(respuesta3, JLayeredPane.DRAG_LAYER);
+            
+            JLabel respuesta4 = new JLabel(respuestasRandom.elementAt(3), SwingConstants.CENTER);
+            respuesta4.setBounds(575, 320, 100, 40);
+            respuesta4.setForeground(Color.YELLOW);
+            respuesta4.setFont(new Font("Courier", Font.BOLD, 24));
+            nivelCables.add(respuesta4, JLayeredPane.DRAG_LAYER);
+            
+            JLabel selector = new JLabel();
+            selector.setBounds(50,-30,120,450);
+            selector.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/selectorbarril.png")));
+            nivelCables.add(selector, JLayeredPane.DRAG_LAYER);
+            
+            Timer terminarnivel = new Timer(1110, null);
+            
+            ActionListener ganaste = new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    contadortiempo.stop();
+                    nivelCables.remove(tiempo);
+                   inBetween(ventana, nivelCables, player, puntaje+1, idNivel, idPregunta, Preguntas, Niveles,false);
+                }
+            };
+            
+            ActionListener perdiste = new ActionListener(){
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    contadortiempo.stop();
+                    nivelCables.remove(tiempo);
+                   inBetween(ventana, nivelCables, player, puntaje+1, idNivel, idPregunta, Preguntas, Niveles,true);
+                }
+            };
+            
+            KeyListener mover = new KeyListener(){
+                @Override
+                public void keyTyped(KeyEvent e) {
+                    
+                }
+
+                @Override
+                public void keyPressed(KeyEvent e) {
+                    System.out.println(selector.getX());
+                    if(e.getKeyCode()==37||e.getKeyCode()==39){
+                        if(e.getKeyCode()==37&&selector.getX()!=50){
+                            selector.setLocation(selector.getX()-170, selector.getY());
+                        }
+                        if(e.getKeyCode()==39&&selector.getX()!=560){
+                            selector.setLocation(selector.getX()+170, selector.getY());
+                        }
+                    }
+                    if(e.getKeyCode()==10||e.getKeyCode()==32){
+                        contadortiempo.stop();
+                        ventana.removeKeyListener(this);
+                        selector.setVisible(false);
+                        terminarnivel.setRepeats(false);
+                        terminarnivel.start();
+                        if(selector.getX()==50){
+                            
+                            
+                        respuesta1.setVisible(false);
+
+                            Barril1.setBounds(Barril1.getX(), Barril1.getY()-30, 120, 550);
+                            if(respuesta1.getText()==Preguntas.elementAt(idPregunta).respuestacorrecta){
+                                
+                                terminarnivel.addActionListener(ganaste);
+                                Barril1.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Barrilgood.gif")));
+                                
+                            }
+                            else{
+                                terminarnivel.addActionListener(perdiste);
+                                Barril1.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Barrilwrong.gif")));
+                                
+                            }
+                        }
+                        if(selector.getX()==220){
+                        respuesta2.setVisible(false);
+                            Barril2.setBounds(Barril2.getX(), Barril2.getY()-30, 120, 550);
+                            if(respuesta2.getText()==Preguntas.elementAt(idPregunta).respuestacorrecta){
+                                
+                                terminarnivel.addActionListener(ganaste);
+                                Barril2.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Barrilgood.gif")));
+                                
+                            }
+                            else{
+                                terminarnivel.addActionListener(perdiste);
+                                Barril2.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Barrilwrong.gif")));
+                                
+                            }
+                        }
+                        if(selector.getX()==390){
+                        respuesta3.setVisible(false);
+                            Barril3.setBounds(Barril3.getX(), Barril3.getY()-30, 120, 550);
+                            if(respuesta3.getText()==Preguntas.elementAt(idPregunta).respuestacorrecta){
+                                
+                                terminarnivel.addActionListener(ganaste);
+                                Barril3.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Barrilgood.gif")));
+                                
+                            }
+                            else{
+                                terminarnivel.addActionListener(perdiste);
+                                Barril3.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Barrilwrong.gif")));
+                                
+                            }
+                            
+                        }
+                        if(selector.getX()==560){
+                            respuesta4.setVisible(false);
+                            Barril4.setBounds(Barril4.getX(), Barril4.getY()-30, 120, 550);
+                            if(respuesta4.getText()==Preguntas.elementAt(idPregunta).respuestacorrecta){
+                                
+                                terminarnivel.addActionListener(ganaste);
+                                Barril4.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Barrilgood.gif")));
+                                
+                            }
+                            else{
+                                
+                                terminarnivel.addActionListener(perdiste);
+                                Barril4.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Barrilwrong.gif")));
+                                
+                            }
+                        }
+                        
+                    }
+                }
+
+                @Override
+                public void keyReleased(KeyEvent e) {
+                    
+                }
+                
+            };
+            
+            ventana.addKeyListener(mover);
             
         }
         
