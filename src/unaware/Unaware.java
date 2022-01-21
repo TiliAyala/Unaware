@@ -851,7 +851,8 @@ Pregunta p14 = new Pregunta();
         else{
             try {
                 actualizarPuntaje(puntaje, ventana);
-            } catch (FileNotFoundException ex) {
+                ejecutarMenu(ventana);
+            }catch (FileNotFoundException ex) {
             }
         }
         
@@ -2279,16 +2280,24 @@ Pregunta p14 = new Pregunta();
             
             
             @Override
-            public void mouseClicked(MouseEvent e) {
-                       
-                       ventanarecord.setVisible(false);
-                       borrarContenido(ventana, ventanarecord);
+            public void mouseClicked(MouseEvent e) {ventanarecord.setVisible(false);
+                       ventana.remove(ventanarecord);
                 try {
                     actualizarNombres(nombre, puntaje, puntaje1, puntaje2, puntaje3, puntaje4, puntaje5);
                 } catch (FileNotFoundException ex) {
                     
                 }
-                       ejecutarMenu(ventana);
+                       JFrame nuevaventana = new JFrame();
+                                nuevaventana.setBounds(0, 0, 800, 500);
+                                nuevaventana.setLocationRelativeTo(null); //Esto hará que el juego siempre aparezca en el centro de la pantalla
+                                nuevaventana.setResizable(false);
+                                nuevaventana.setTitle("Unaware");
+                                nuevaventana.setDefaultCloseOperation(3);
+                                nuevaventana.setEnabled(true);
+                                nuevaventana.setVisible(true);
+                                nuevaventana.setIconImage(new ImageIcon(Unaware.class.getResource("/Resources/logor.png")).getImage());
+                                ventana.dispose();
+                                ejecutarMenu(nuevaventana);
                        
                        
                    
@@ -2381,8 +2390,21 @@ Pregunta p14 = new Pregunta();
             
         }
         else{
-            ejecutarMenu(ventana);
+            JFrame nuevaventana = new JFrame();
+                                nuevaventana.setBounds(0, 0, 800, 500);
+                                nuevaventana.setLocationRelativeTo(null); //Esto hará que el juego siempre aparezca en el centro de la pantalla
+                                nuevaventana.setResizable(false);
+                                nuevaventana.setTitle("Unaware");
+                                nuevaventana.setDefaultCloseOperation(3);
+                                nuevaventana.setEnabled(true);
+                                nuevaventana.setVisible(true);
+                                nuevaventana.setIconImage(new ImageIcon(Unaware.class.getResource("/Resources/logor.png")).getImage());
+                                ventana.dispose();
+                                ejecutarMenu(nuevaventana);
         }
+                                
+
+        
         
         
     }
