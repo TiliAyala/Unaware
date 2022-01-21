@@ -50,6 +50,7 @@ public class Unaware {
         ventana.setDefaultCloseOperation(3);
         ventana.setEnabled(true);
         ventana.setVisible(true);
+        ventana.setIconImage(new ImageIcon(Unaware.class.getResource("/Resources/logor.png")).getImage());
         
         
         //ventana.setIconImage(new ImageIcon(Unaware.class.getClassLoader().getResource("\\Resources\\1Vida.png")).getImage());
@@ -937,6 +938,7 @@ Pregunta p14 = new Pregunta();
                                 nuevaventana.setDefaultCloseOperation(3);
                                 nuevaventana.setEnabled(true);
                                 nuevaventana.setVisible(true);
+                                nuevaventana.setIconImage(new ImageIcon(Unaware.class.getResource("/Resources/logor.png")).getImage());
                                 ventana.dispose();
                                 actualizarPuntaje(puntaje, nuevaventana);
                             } catch (FileNotFoundException ex) {
