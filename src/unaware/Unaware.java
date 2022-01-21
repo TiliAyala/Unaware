@@ -2134,7 +2134,7 @@ Pregunta p14 = new Pregunta();
                             moversez.stop();
                             
                             player.gender.setCharAt(1, 'L');
-                            player.cuerpo.setIcon(new ImageIcon(Unaware.class.getResource("src/Players/"+player.gender)));
+                            player.cuerpo.setIcon(new ImageIcon(Unaware.class.getResource("/Players/"+player.gender)));
                             
                             ActionListener restarMovimiento = new ActionListener(){
                         @Override
