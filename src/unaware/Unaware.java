@@ -14,10 +14,17 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import static java.util.Collections.shuffle;
 import static java.util.Collections.shuffle;
 import java.util.Random;
@@ -32,7 +39,7 @@ import javax.swing.*;
  *
  * @author TiliAyala
  */
-public class Unaware {
+public class Unaware implements Serializable{
     
 
     /**
@@ -575,6 +582,8 @@ Pregunta p14 = new Pregunta();
         menuJugar.add(fondo, JLayeredPane.DEFAULT_LAYER);
         menuJugar.add(player.cuerpo, JLayeredPane.DRAG_LAYER);
         
+        
+        
         //PUNTAJE
         
         File puntajes = scores(); //Esto genera las hojas de los puntajes en caso de que no existan
@@ -644,6 +653,13 @@ Pregunta p14 = new Pregunta();
         
         menuJugar.add(play.cuerpo, JLayeredPane.DRAG_LAYER);
         
+        Boton questions = new Boton();
+        questions.cuerpo.setBounds(60, 270, 240, 80);
+        questions.file.append("00_Btn_Questions.png");
+        ImageIcon Im_questions = new ImageIcon(Unaware.class.getResource("/Botones/"+questions.file));
+        questions.cuerpo.setIcon(Im_questions);
+        
+        menuJugar.add(questions.cuerpo, JLayeredPane.DRAG_LAYER);
         
         //Boton para regresar al menú principal
         
@@ -746,8 +762,45 @@ Pregunta p14 = new Pregunta();
             
         };
         
+        MouseListener cambiarpreguntas = new MouseListener(){
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                       cambiarpreguntas(ventana,menuJugar,player, 0, 0, 0, PaquetePreguntas, paqueteNiveles, false);
+                       
+                
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                //No usado
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                //No usado
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                questions.file.setCharAt(1, '1');
+                
+                 ImageIcon nuevo = new ImageIcon(Unaware.class.getResource("/Botones/"+questions.file));
+                 questions.cuerpo.setIcon(nuevo);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                questions.file.setCharAt(1, '0');
+                
+                 ImageIcon nuevo = new ImageIcon (Unaware.class.getResource("/Botones/"+questions.file));
+                 questions.cuerpo.setIcon(nuevo);
+            }
+            
+        };
+        
         play.cuerpo.addMouseListener(empezarInt);
         genero.cuerpo.addMouseListener(cambiarPersonaje);
+        questions.cuerpo.addMouseListener(cambiarpreguntas);
         
         
         
@@ -2490,6 +2543,454 @@ Pregunta p14 = new Pregunta();
         
         
         
+        
+    }
+    
+    private static void cambiarpreguntas(JFrame ventana, JLayeredPane contenido, Jugador player, int puntaje, int idNivel, int idPregunta, Vector <Pregunta>Preguntas, Vector<Nivel> Niveles, boolean gameOver){
+        borrarContenido(ventana, contenido);
+        
+        File directorioUnaware = new File(System.getProperty("user.home")+"/AppData/Roaming/.unawarePackages");
+        if(!directorioUnaware.exists()){
+            directorioUnaware.mkdirs();
+        }
+        
+        JLayeredPane hub = new JLayeredPane();
+        hub.setBounds(0,0,800,500);
+        hub.setBackground(new Color(118, 115, 116));
+        hub.setOpaque(true);
+        ventana.add(hub);
+        
+        JLabel nuevas = new JLabel();
+        nuevas.setBounds(280, 50, 240, 80);
+        nuevas.setIcon(new ImageIcon(Unaware.class.getResource("/Botones/00_Btn_New.png")));
+        hub.add(nuevas);
+        
+        JLabel select = new JLabel();
+        select.setBounds(280, 300, 240, 80);
+        select.setIcon(new ImageIcon(Unaware.class.getResource("/Botones/00_Btn_Selection.png")));
+        hub.add(select);
+        
+        MouseListener nuevasPreguntas = new MouseListener(){
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                
+                nuevas.setVisible(false);
+                select.setVisible(false);
+                
+                Preguntas.clear();
+                
+                
+                JTextArea instrucciones = new JTextArea();
+                instrucciones.setOpaque(false);
+                instrucciones.setFont(new Font("Futura", Font.BOLD, 24));
+                instrucciones.setForeground(Color.white);
+                instrucciones.setText("Pregunta:\nRespuesta Correcta:\n\n\nRespuesta b:\n\n\nRespuesta c:\n\n\nRespuesta d:");
+                instrucciones.setBounds(10,10,400,500);
+                instrucciones.setEditable(false);
+                hub.add(instrucciones);
+                
+                JLabel nombre = new JLabel("Escribe el Nombre del Paquete:");
+                nombre.setFont(new Font("Futura", Font.BOLD, 20));
+                nombre.setForeground(Color.white);
+                nombre.setBounds(460,10,400,40);
+                hub.add(nombre);
+                
+                JLabel aviso = new JLabel();
+                aviso.setBounds(460,90,300,300);
+                aviso.setIcon(new ImageIcon(Unaware.class.getResource("/Resources/Aviso.png")));
+                hub.add(aviso, JLayeredPane.MODAL_LAYER);
+                
+                JTextField pregunta = new JTextField();
+                pregunta.setBackground(new Color(146, 143, 144));
+                pregunta.setFont(new Font("Arial", Font.PLAIN, 14));
+                pregunta.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+                pregunta.setBounds(165, 5, 275, 40);
+                hub.add(pregunta, JLayeredPane.DRAG_LAYER);
+                
+                JTextField nombref = new JTextField();
+                nombref.setBackground(new Color(146, 143, 144));
+                nombref.setFont(new Font("Arial", Font.PLAIN, 14));
+                nombref.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+                nombref.setBounds(465, 45, 275, 40);
+                hub.add(nombref, JLayeredPane.DRAG_LAYER);
+                
+                JTextField respuesta1 = new JTextField();
+                respuesta1.setBackground(new Color(146, 143, 144));
+                respuesta1.setFont(new Font("Arial", Font.PLAIN, 14));
+                respuesta1.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+                respuesta1.setBounds(10, 85, 85, 40);
+                hub.add(respuesta1, JLayeredPane.DRAG_LAYER);
+                
+                JTextField respuesta2 = new JTextField();
+                respuesta2.setBackground(new Color(146, 143, 144));
+                respuesta2.setFont(new Font("Arial", Font.PLAIN, 14));
+                respuesta2.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+                respuesta2.setBounds(10, 185, 85, 40);
+                hub.add(respuesta2, JLayeredPane.DRAG_LAYER);
+                
+                JTextField respuesta3 = new JTextField();
+                respuesta3.setBackground(new Color(146, 143, 144));
+                respuesta3.setFont(new Font("Arial", Font.PLAIN, 14));
+                respuesta3.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+                respuesta3.setBounds(10, 285, 85, 40);
+                hub.add(respuesta3, JLayeredPane.DRAG_LAYER);
+                
+                JTextField respuesta4 = new JTextField();
+                respuesta4.setBackground(new Color(146, 143, 144));
+                respuesta4.setFont(new Font("Arial", Font.PLAIN, 14));
+                respuesta4.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+                respuesta4.setBounds(10, 385, 85, 40);
+                hub.add(respuesta4, JLayeredPane.DRAG_LAYER);
+                
+                JLabel siguiente = new JLabel();
+                siguiente.setBounds(200, 365, 80, 80);
+                siguiente.setIcon(new ImageIcon(Unaware.class.getResource("/Botones/00_Btn_Retorno.png")));
+                hub.add(siguiente, JLayeredPane.DRAG_LAYER);
+                
+                JLabel guardar = new JLabel();
+                guardar.setBounds(700, 365, 80, 80);
+                guardar.setIcon(new ImageIcon(Unaware.class.getResource("/Botones/00_Btn_Guardar.png")));
+                hub.add(guardar, JLayeredPane.DRAG_LAYER);
+                
+                MouseListener botonsiguiente = new MouseListener(){
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        Pregunta z = crearpregunta(new Pregunta(), pregunta.getText(), respuesta1.getText(), respuesta2.getText(), respuesta3.getText(), respuesta4.getText());
+                        Preguntas.add(z);
+                        pregunta.setText("");
+                        respuesta1.setText("");
+                        respuesta2.setText("");
+                        respuesta3.setText("");
+                        respuesta4.setText("");
+                        
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        siguiente.setIcon(new ImageIcon(Unaware.class.getResource("/Botones/01_Btn_Retorno.png")));
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        siguiente.setIcon(new ImageIcon(Unaware.class.getResource("/Botones/00_Btn_Retorno.png")));
+                    }
+                    
+                };
+                
+                siguiente.addMouseListener(botonsiguiente);
+                
+                MouseListener guardarPreguntas = new MouseListener(){
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        
+                        String name = "x";
+                        if (nombref.getText().isEmpty()){
+                            name = "SinNombre";
+                        }
+                        else{
+                            name = nombref.getText();
+                        }
+                        
+                        
+                        
+                        
+                        /*try {
+                            FileOutputStream guardador = new FileOutputStream(System.getProperty("user.home")+"/AppData/Roaming/.unawarePackages/"+name+".txt");
+                            ObjectOutputStream salida = new ObjectOutputStream(guardador);
+                            salida.writeObject(Preguntas.firstElement().respuestacorrecta.toString());
+                            salida.close(  );
+                            
+                            
+                            
+                        } catch (FileNotFoundException ex) {
+                            
+                        } catch (IOException ex) {
+                            
+                        }*/
+                        File archivo = new File(System.getProperty("user.home")+"/AppData/Roaming/.unawarePackages/"+name+".txt");
+                        try {
+                            FileWriter escritor = new FileWriter(archivo);
+                            while(!Preguntas.isEmpty()){
+                            escritor.write(Preguntas.elementAt(0).pregunta+"\n");
+                            escritor.write(Preguntas.elementAt(0).respuestacorrecta+"\n");
+                            escritor.write(Preguntas.elementAt(0).respuestab+"\n");
+                            escritor.write(Preguntas.elementAt(0).respuestac+"\n");
+                            escritor.write(Preguntas.elementAt(0).respuestad+"\n");
+                            Preguntas.removeElementAt(0);
+                        }
+                            
+                            escritor.close();
+                        } catch (IOException ex) {
+                            
+                        }
+                        
+                        
+                        JFrame nuevaventana = new JFrame();
+                                nuevaventana.setBounds(0, 0, 800, 500);
+                                nuevaventana.setLocationRelativeTo(null); //Esto hará que el juego siempre aparezca en el centro de la pantalla
+                                nuevaventana.setResizable(false);
+                                nuevaventana.setTitle("Unaware");
+                                nuevaventana.setDefaultCloseOperation(3);
+                                nuevaventana.setEnabled(true);
+                                nuevaventana.setVisible(true);
+                                nuevaventana.setIconImage(new ImageIcon(Unaware.class.getResource("/Resources/logor.png")).getImage());
+                                ventana.dispose();
+                                ejecutarMenu(nuevaventana);
+                        
+                        
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+                        
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        guardar.setIcon(new ImageIcon(Unaware.class.getResource("/Botones/01_Btn_Guardar.png")));
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                     guardar.setIcon(new ImageIcon(Unaware.class.getResource("/Botones/00_Btn_Guardar.png")));
+                    }
+                    
+                };
+                
+                guardar.addMouseListener(guardarPreguntas);
+                
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                nuevas.setIcon(new ImageIcon(Unaware.class.getResource("/Botones/01_Btn_New.png")));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                nuevas.setIcon(new ImageIcon(Unaware.class.getResource("/Botones/00_Btn_New.png")));
+            }
+            
+        };
+        
+        MouseListener seleccionarPreguntas = new MouseListener(){
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                select.setVisible(false);
+                nuevas.setVisible(false);
+                
+                File directorioUnaware = new File(System.getProperty("user.home")+"/AppData/Roaming/.unawarePackages/");
+                Vector <String> archivos = new Vector<String>(Arrays.asList(directorioUnaware.list()));
+                Vector <String> archivosr = new Vector<String>(Arrays.asList(directorioUnaware.list()));
+                
+                if(archivos.isEmpty()){
+                    JFrame nuevaventana = new JFrame();
+                                nuevaventana.setBounds(0, 0, 800, 500);
+                                nuevaventana.setLocationRelativeTo(null); //Esto hará que el juego siempre aparezca en el centro de la pantalla
+                                nuevaventana.setResizable(false);
+                                nuevaventana.setTitle("Unaware");
+                                nuevaventana.setDefaultCloseOperation(3);
+                                nuevaventana.setEnabled(true);
+                                nuevaventana.setVisible(true);
+                                nuevaventana.setIconImage(new ImageIcon(Unaware.class.getResource("/Resources/logor.png")).getImage());
+                                ventana.dispose();
+                                ejecutarMenu(nuevaventana);
+                }
+                else{
+                    
+                    JLabel titulo = new JLabel("Selecciona el Paquete que Quieras Usar:", SwingConstants.CENTER);
+                    titulo.setFont(new Font("Futura", Font.BOLD, 25));
+                    titulo.setForeground(Color.WHITE);
+                    titulo.setBounds(100,10,600,40);
+                    hub.add(titulo);
+                    
+                    JLabel nombre = new JLabel(archivos.firstElement().substring(0, archivos.firstElement().length()-4), SwingConstants.CENTER);
+                    nombre.setFont(new Font("Futura", Font.BOLD, 30));
+                    nombre.setForeground(Color.yellow);
+                    nombre.setBounds(200,100,400,40);
+                    hub.add(nombre);
+                    
+                    JLabel jugar = new JLabel();
+                    jugar.setIcon(new ImageIcon(Unaware.class.getResource("/Botones/00_Btn_Empezar.png")));
+                    jugar.setBounds(280,200,240,240);
+                    hub.add(jugar);
+                    
+                    JLabel cambiar = new JLabel();
+                    cambiar.setIcon(new ImageIcon(Unaware.class.getResource("/Botones/00_Btn_Jugar.png")));
+                    cambiar.setBounds(600,80,80,80);
+                    hub.add(cambiar);
+                    
+                    MouseListener siguiente = new MouseListener(){
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            if(archivos.firstElement()==archivos.lastElement()){
+                                archivos.clear();
+                                archivos.addAll(archivosr);
+                            }else{
+                                archivos.removeElementAt(0);
+                            }
+                            
+                           nombre.setText(archivos.firstElement().substring(0, archivos.firstElement().length()-4));
+                        }
+
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+                            
+                        }
+
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+                            
+                        }
+
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+                            cambiar.setIcon(new ImageIcon(Unaware.class.getResource("/Botones/01_Btn_Jugar.png")));
+                        }
+
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+                            cambiar.setIcon(new ImageIcon(Unaware.class.getResource("/Botones/00_Btn_Jugar.png")));
+                        }
+                        
+                    };
+                    
+                    cambiar.addMouseListener(siguiente);
+                    
+                    MouseListener empezar = new MouseListener(){
+                        @Override
+                        public void mouseClicked(MouseEvent e) {                          
+                            
+                            File archivo = new File(System.getProperty("user.home")+"/AppData/Roaming/.unawarePackages/"+nombre.getText()+".txt");
+                            Vector<Pregunta> nuevoset = new Vector<Pregunta>();
+                            
+                            try {
+                                Scanner lector = new Scanner(archivo);
+                                while(lector.hasNextLine()){
+                                        String pregunta = lector.nextLine();
+                                        String respuestacorrecta=lector.nextLine();
+                                        String respuestab=lector.nextLine();
+                                        String respuestac=lector.nextLine();
+                                        String respuestad=lector.nextLine();
+                                        nuevoset=crearset(nuevoset, pregunta, respuestacorrecta, respuestab, respuestac, respuestad, new Pregunta()); 
+            
+        }
+                                 lector.close();
+                            } catch (FileNotFoundException ex) {
+                                System.out.println("xd");
+                            }
+                            
+                            player.vidas=3; //Hace que cada vez que inicie el jugador tenga tres vidas
+                            inBetween(ventana,hub,player, 0, 0, 0, nuevoset, Niveles, false);
+                            
+                        }
+
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+                            
+                        }
+
+                        @Override
+                        public void mouseReleased(MouseEvent e) {
+                           
+                        }
+
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+                            jugar.setIcon(new ImageIcon(Unaware.class.getResource("/Botones/01_Btn_Empezar.png")));
+                        }
+
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+                            jugar.setIcon(new ImageIcon(Unaware.class.getResource("/Botones/00_Btn_Empezar.png")));
+                        }
+                        
+                    };
+                    
+                    jugar.addMouseListener(empezar);
+                    
+                }
+                
+                
+                
+                
+                
+                
+                
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                select.setIcon(new ImageIcon(Unaware.class.getResource("/Botones/01_Btn_Selection.png")));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                select.setIcon(new ImageIcon(Unaware.class.getResource("/Botones/00_Btn_Selection.png")));
+            }
+            
+        };
+        
+        nuevas.addMouseListener(nuevasPreguntas);
+        select.addMouseListener(seleccionarPreguntas);
+        
+    }
+    
+    private static Pregunta crearpregunta (Pregunta z, String pregunta, String respuestacorrecta, String respuestab, String respuestac, String respuestad){
+        z.pregunta=pregunta;
+        z.respuestacorrecta = respuestacorrecta;
+        z.respuestab= respuestab;
+        z.respuestac= respuestac;
+        z.respuestad= respuestad;
+        
+        return z;
+    }
+    
+    private static Vector<Pregunta>crearset(Vector<Pregunta>vector, String p, String a, String b, String c, String d, Pregunta x){
+            x.pregunta=p;
+            x.respuestacorrecta=a;
+            x.respuestab=b;
+            x.respuestac=c;
+            x.respuestad=d;
+            
+            vector.add(x);
+            
+            return vector;
         
     }
     
