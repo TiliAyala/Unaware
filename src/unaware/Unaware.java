@@ -39,7 +39,7 @@ import javax.swing.*;
  *
  * @author TiliAyala
  */
-public class Unaware implements Serializable{
+public class Unaware{
     
 
     /**
